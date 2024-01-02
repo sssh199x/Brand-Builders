@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ordering_app/res/constants.dart';
 import 'package:ordering_app/screens/home/popular/popular_view.dart';
 import 'package:ordering_app/provider/restaurant_model.dart';
 import 'package:provider/provider.dart';
@@ -9,7 +10,7 @@ class PopularAll extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Popular')),
+      appBar: AppBar(title: const Text('Popular'),backgroundColor: prmColor,foregroundColor: bgColor),
       body: Consumer<RestaurantModel>(
         builder: (context, value, child) {
           return ListView.builder(
