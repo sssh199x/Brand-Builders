@@ -18,7 +18,7 @@ class FavouriteRestaurants extends StatelessWidget {
           SectionHeader(
               headerText: 'Your Favourite Restaurants',
               viewText: 'View All  >',
-              viewWidth: MediaQuery.of(context).size.width * 0.2,
+              viewWidth: scrWidth * 0.2,
               onViewClick: () {
                 Navigator.push(
                   context,
@@ -30,7 +30,7 @@ class FavouriteRestaurants extends StatelessWidget {
               }),
           Container(
             padding: const EdgeInsets.only(bottom: 16),
-            height:  scrWidth < 420 ? scrWidth/ 1.8701 :  scrWidth / 3.5,
+            height:  scrWidth < 420 ? scrWidth/ 1.8701 :  scrWidth / 1.8,
             child: Consumer<RestaurantModel>(builder: (context, value, child) {
               int count = value.restaurants.length;
               return ListView.builder(
@@ -41,7 +41,10 @@ class FavouriteRestaurants extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.only(right: 8.0),
-                    child: FavouriteView(favItem: value.restaurants[index]),
+                    child: FavouriteView(favItem: value.restaurants[index],
+                    sliderWidth: scrWidth < 420 ? scrWidth - 80 : scrWidth - 150,
+                    sliderHeight: scrWidth < 420 ? scrWidth * 9/16 : scrWidth * 9/16  ,
+                    ),
                   );
                 },
               );
