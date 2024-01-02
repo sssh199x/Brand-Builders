@@ -4,9 +4,11 @@ import 'package:ordering_app/screens/about_restaurant.dart';
 import 'package:ordering_app/provider/restaurant_model.dart';
 
 class FavouriteView extends StatelessWidget {
-  const FavouriteView({super.key, required this.favItem});
+  const FavouriteView({super.key, required this.favItem, required this.sliderWidth, required this.sliderHeight});
 
   final Restaurant favItem;
+  final double sliderWidth;
+  final double sliderHeight;
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +24,8 @@ class FavouriteView extends StatelessWidget {
         children: [
           Container(
               padding: const EdgeInsets.symmetric(vertical: 16),
-              width: 215,
-              height: 160,
+              width: sliderWidth,
+              height: sliderHeight - 70,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Image.asset(favItem.image, fit: BoxFit.cover),
