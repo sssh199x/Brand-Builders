@@ -9,7 +9,7 @@ class ExploreAll extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: prmColor,
+        backgroundColor: prmColor,foregroundColor: bgColor,
         title: const Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
