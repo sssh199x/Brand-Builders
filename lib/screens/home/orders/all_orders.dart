@@ -11,7 +11,7 @@ class AllOrders extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: prmColor,
+          backgroundColor: prmColor,foregroundColor: bgColor,
           title: const Text('Orders'),
         ),
         body: Consumer<FoodModel>(builder: (context, value, child) {
