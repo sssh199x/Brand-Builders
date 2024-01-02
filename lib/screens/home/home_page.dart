@@ -13,26 +13,9 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: prmColor,
       body: Container(
-        color: Colors.white,
-        margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-        
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            if (constraints.maxWidth < 260) {
-              return SingleChildScrollView(
-                //?? whats this for ?
-                scrollDirection: Axis.horizontal,
-                child: SizedBox(
-                    width: 260,
-                    height: MediaQuery.of(context).size.height,
-                    child: const ScrollableView()),
-              );
-            } else {
-              return const ScrollableView();
-            }
-          },
-        ),
-      ),
+          color: Colors.white,
+          margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+          child: const ScrollableView()),
     );
   }
 }
