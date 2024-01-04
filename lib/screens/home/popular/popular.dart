@@ -20,8 +20,8 @@ class PopularRestaurants extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: screenWidth * 0.04), // 16.4571
+          padding:
+              EdgeInsets.symmetric(horizontal: screenWidth * 0.04), // 16.4571
           child: SectionHeader(
             key: UniqueKey(),
             headerText: 'Popular In Your Area',
@@ -102,45 +102,49 @@ class PopularRestaurants extends StatelessWidget {
 //     );
 //   }
 // }
+double calculateSliderHeight(double screenWidth) {
+  double aspectRatio = 9 / 16;
+  double extraHeight = 40;
+  return screenWidth * aspectRatio + extraHeight;
+}
 
 Widget _buildPopularRestSlider(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double sliderWidth = screenWidth > 420 ? 420 : screenWidth;
-    double sliderHeight = sliderWidth * (9 / 16) + 40;
+  double screenWidth = MediaQuery.of(context).size.width;
+  double sliderWidth = screenWidth > 420 ? 420 : screenWidth;
+  double sliderHeight = calculateSliderHeight(screenWidth);
 
-    return Container(
-      margin: const EdgeInsets.only(top: 14, bottom: 5),
-      height: sliderHeight,
-      child: Consumer<RestaurantModel>(
-        builder: (context, value, child) {
-          int count = value.restaurants.length;
-          return CarouselSlider.builder(
-            itemCount: count > 4 ? 4 : count,
-            itemBuilder: (context, index, realIdx) {
-              return Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: RestaurantView(
-                  sliderHeight: sliderHeight - 10,
-                  restaurant: value.restaurants[index],
-                  sliderWidth: sliderWidth,
-                ),
-              );
-            },
-            options: CarouselOptions(
-              aspectRatio: 16 / 9,
-              viewportFraction: sliderWidth * 0.92 / screenWidth,
-              initialPage: 0,
-              enableInfiniteScroll: true,
-              autoPlay: true,
-              height: sliderHeight,
-              disableCenter: true,
-              autoPlayInterval: const Duration(seconds: 5),
-              autoPlayAnimationDuration: const Duration(milliseconds: 2000),
-              autoPlayCurve: Curves.fastOutSlowIn,
-            ),
-          );
-        },
-      ),
-    );
-  }
-
+  return Container(
+    margin: const EdgeInsets.only(top: 14, bottom: 5),
+    height: sliderHeight,
+    child: Consumer<RestaurantModel>(
+      builder: (context, value, child) {
+        int count = value.restaurants.length;
+        return CarouselSlider.builder(
+          itemCount: count > 4 ? 4 : count,
+          itemBuilder: (context, index, realIdx) {
+            return Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: RestaurantView(
+                sliderHeight: sliderHeight - 10,
+                restaurant: value.restaurants[index],
+                sliderWidth: sliderWidth,
+              ),
+            );
+          },
+          options: CarouselOptions(
+            aspectRatio: 16 / 9,
+            viewportFraction: sliderWidth * 0.92 / screenWidth,
+            initialPage: 0,
+            enableInfiniteScroll: true,
+            autoPlay: true,
+            height: sliderHeight,
+            disableCenter: true,
+            autoPlayInterval: const Duration(seconds: 5),
+            autoPlayAnimationDuration: const Duration(milliseconds: 2000),
+            autoPlayCurve: Curves.fastOutSlowIn,
+          ),
+        );
+      },
+    ),
+  );
+}

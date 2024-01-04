@@ -14,6 +14,28 @@ class SectionHeader extends StatelessWidget {
   final double viewWidth;
   final VoidCallback onViewClick;
 
+  Widget _buildRowWithInkWell() {
+    return SizedBox(
+      height: 20,
+      width: viewWidth,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          InkWell(
+            onTap: onViewClick,
+            child: FittedBox(
+              fit: BoxFit.cover,
+              child: Text(
+                viewText,
+                style: viewStyle,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -22,32 +44,14 @@ class SectionHeader extends StatelessWidget {
         textDirection: TextDirection.ltr,
         alignment: WrapAlignment.spaceBetween,
         children: [
-          Text(
-            headerText,
-            style: headerStyle,
-          ),
-          SizedBox(
-            height: 20,
-            width: viewWidth,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                InkWell(
-                  onTap: onViewClick,
-                  child: Text(
-                    viewText,
-                    style: viewStyle,
-                  ),
-                ),
-                // InkWell(
-                //     onTap: onViewClick,
-                //     child: const Icon(
-                //       Icons.keyboard_arrow_right,
-                //       color: prmColor,
-                //     )),
-              ],
+          FittedBox(
+            fit: BoxFit.cover,
+            child: Text(
+              headerText,
+              style: headerStyle,
             ),
           ),
+          _buildRowWithInkWell()
         ],
       ),
     );

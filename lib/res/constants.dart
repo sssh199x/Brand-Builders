@@ -20,7 +20,7 @@ const headerStyle = TextStyle(
     color: txtColor);
 
 const viewStyle = TextStyle(
-    fontSize: 11.5,
+    fontSize: 12.0,
     fontWeight: FontWeight.w600,
     fontFamily: 'Inter',
     letterSpacing: 0.5,

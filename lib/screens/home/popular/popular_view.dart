@@ -14,6 +14,47 @@ class RestaurantView extends StatelessWidget {
   final double sliderHeight;
   final double sliderWidth;
 
+  Widget _buildRestaurantInfo() {
+    return SizedBox(
+      height: 30,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const Icon(Icons.star, color: starColor, size: 15),
+          const SizedBox(width: 6),
+          RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: restaurant.rating.toString(),
+                  style: txtStyle1,
+                ),
+                TextSpan(
+                  text: ' (${restaurant.reviews.toString()})',
+                  style: txtStyle2,
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 15),
+          const Icon(Icons.location_on, size: 12),
+          const SizedBox(width: 6),
+          Text(
+            '${restaurant.distance} km',
+            style: txtStyle2,
+          ),
+          const SizedBox(width: 15),
+          const Icon(Icons.access_time_filled, size: 12),
+          const SizedBox(width: 6),
+          Text(
+            '${restaurant.time.toString()} mins',
+            style: txtStyle2,
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -38,7 +79,7 @@ class RestaurantView extends StatelessWidget {
             ),
           ),
           Container(
-            padding: const EdgeInsets.only(top: 8.0, bottom: 10),
+            padding: const EdgeInsets.only(top: 8.0, bottom: 8),
             height: sliderHeight - 40,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
@@ -50,44 +91,7 @@ class RestaurantView extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(
-            height: 30,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const Icon(Icons.star, color: starColor, size: 15),
-                const SizedBox(width: 6),
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: restaurant.rating.toString(),
-                        style: txtStyle1,
-                      ),
-                      TextSpan(
-                        text: ' (${restaurant.reviews.toString()})',
-                        style: txtStyle2,
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 15),
-                const Icon(Icons.location_on, size: 12),
-                const SizedBox(width: 6),
-                Text(
-                  '${restaurant.distance} km',
-                  style: txtStyle2,
-                ),
-                const SizedBox(width: 15),
-                const Icon(Icons.access_time_filled, size: 12),
-                const SizedBox(width: 6),
-                Text(
-                  '${restaurant.time.toString()} mins',
-                  style: txtStyle2,
-                ),
-              ],
-            ),
-          )
+          _buildRestaurantInfo(),
         ],
       ),
     );

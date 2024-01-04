@@ -9,6 +9,7 @@ class PopularAll extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(title: const Text('Popular'),backgroundColor: prmColor,foregroundColor: bgColor),
       body: Consumer<RestaurantModel>(
@@ -20,9 +21,9 @@ class PopularAll extends StatelessWidget {
                 padding: const EdgeInsets.all(15.0),
                 child: RestaurantView(
                   restaurant: value.restaurants[index],
-                  sliderHeight: MediaQuery.of(context).size.width *
+                  sliderHeight: screenWidth *
                       (9 / 16), // (9/16 = 0.5625, 411.42857 * 0.5625 = 231.428)
-                  sliderWidth: MediaQuery.of(context).size.width,
+                  sliderWidth: screenWidth,
                 ),
               );
             },

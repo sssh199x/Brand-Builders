@@ -30,7 +30,6 @@ class DropDownCategory extends StatelessWidget {
               isDense: true,
               buttonStyleData: const ButtonStyleData(
                 height: 30,
-                //width: 66,
               ),
               iconStyleData: IconStyleData(
                   iconEnabledColor: isExploreAll ? Colors.white : Colors.black),
@@ -82,15 +81,16 @@ class ListViewBuild extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<FoodModel>(builder: (context, value, child) {
       int count = value.foodItems.length;
+      int itemCount = viewAll
+            ? count
+            : count > 6
+                ? 6
+                : count;
       return ListView.builder(
         padding: EdgeInsets.zero,
          shrinkWrap: true,
          physics: const NeverScrollableScrollPhysics(),
-        itemCount: viewAll
-            ? count
-            : count > 6
-                ? 6
-                : count,
+        itemCount: itemCount,
         itemBuilder: (context, index) {
           Food item = value.foodItems[index];
           return GestureDetector(
@@ -102,21 +102,20 @@ class ListViewBuild extends StatelessWidget {
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    SizedBox(
-                      width: 121,
-                      height: 94,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.asset(item.image, fit: BoxFit.cover),
-                      ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(
+                    width: 121,
+                    height: 94,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.asset(item.image, fit: BoxFit.cover),
                     ),
-                    const SizedBox(width: 16),
-                    Column(
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
@@ -129,7 +128,7 @@ class ListViewBuild extends StatelessWidget {
                         const SizedBox(height: 4),
                         Text(item.restaurant,
                             style: const TextStyle(
-                                fontFamily: 'Inter', fontSize: 13)),
+                                fontFamily: 'Inter', fontSize: 13,fontWeight: FontWeight.w500)),
                         const SizedBox(height: 4),
                         Text(
                           'Rs ${item.price.toString()}',
@@ -171,9 +170,9 @@ class ListViewBuild extends StatelessWidget {
                           ],
                         ),
                       ],
-                    )
-                  ],
-                ),
+                    ),
+                  )
+                ],
               ),
             ),
           );
