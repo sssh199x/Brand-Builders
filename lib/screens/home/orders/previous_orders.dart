@@ -9,21 +9,8 @@ import 'order_view.dart';
 class PreviousOrders extends StatelessWidget {
   const PreviousOrders({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double sliderWidth;
-    if (screenWidth > 420) {
-      sliderWidth = 420;
-    } else {
-      sliderWidth = screenWidth;
-    }
-
-    final sliderHeight = sliderWidth * (9 / 16) + 60;
-
-    return Column(
-      children: [
-        Padding(
+  Widget _buildHeader (BuildContext context) { 
+    return Padding(
           padding: EdgeInsets.symmetric(
               horizontal: MediaQuery.of(context).size.width * 0.04),
           child: SectionHeader(
@@ -39,8 +26,11 @@ class PreviousOrders extends StatelessWidget {
               );
             },
           ),
-        ),
-        SizedBox(
+        );
+  }
+
+  Widget _buildCarouselSlider(double sliderWidth,double sliderHeight,double screenWidth) {
+    return         SizedBox(
           height: sliderHeight,
           child: Consumer<FoodModel>(builder: (context, value, child) {
             int count = value.foodItems.length;
@@ -57,7 +47,7 @@ class PreviousOrders extends StatelessWidget {
                   );
                 },
                 options: CarouselOptions(
-                  height: sliderHeight ,
+                  height: sliderHeight,
                   aspectRatio: 16 / 9,
                   viewportFraction: sliderWidth * 0.92 / screenWidth,
                   initialPage: 0,
@@ -68,7 +58,22 @@ class PreviousOrders extends StatelessWidget {
                   autoPlayCurve: Curves.fastOutSlowIn,
                 ));
           }),
-        ),
+        );
+
+  }
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double sliderWidth = screenWidth > 420 ? 420 : screenWidth;
+    double sliderHeight = sliderWidth * (9 / 16) + 60;
+
+    return Column(
+      children: [
+        _buildHeader(context),
+       _buildCarouselSlider(sliderWidth, sliderHeight, screenWidth),
         const SizedBox(height: 24),
       ],
     );
