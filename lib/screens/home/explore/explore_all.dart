@@ -18,9 +18,7 @@ class ExploreAll extends StatelessWidget {
           ],
         ),
       ),
-      body: const SingleChildScrollView(
-        child: ListViewBuild(viewAll: true),
-      ),
+      body: const ListViewBuild(viewAll: false),
     );
   }
 }
