@@ -10,23 +10,28 @@ class AllOrders extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: prmColor,foregroundColor: bgColor,
-          title: const Text('Orders'),
-        ),
-        body: Consumer<FoodModel>(builder: (context, value, child) {
+      appBar: AppBar(
+        backgroundColor: prmColor,
+        foregroundColor: bgColor,
+        title: const Text('Orders'),
+      ),
+      body: Consumer<FoodModel>(
+        builder: (context, value, child) {
           return ListView.builder(
-              itemCount: value.foodItems.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: OrderView(
-                    orderItem: value.foodItems[index],
-                    sliderHeight: MediaQuery.of(context).size.width * (9 / 16),
-                    sliderWidth: double.infinity,
-                  ),
-                );
-              });
-        }));
+            itemCount: value.foodItems.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: OrderView(
+                  orderItem: value.foodItems[index],
+                  sliderHeight: MediaQuery.of(context).size.width * (9 / 16),
+                  sliderWidth: double.infinity,
+                ),
+              );
+            },
+          );
+        },
+      ),
+    );
   }
 }
