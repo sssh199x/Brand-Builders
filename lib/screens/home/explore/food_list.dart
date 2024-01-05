@@ -185,30 +185,8 @@ class ListViewBuild extends StatelessWidget {
 class GridViewBuild extends StatelessWidget {
   const GridViewBuild({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<FoodModel>(builder: (context, value, child) {
-      int count = value.foodItems.length;
-      return GridView.builder(
-          gridDelegate: MediaQuery.of(context).size.width > 400
-              ? const SliverGridDelegateWithMaxCrossAxisExtent(
-                  mainAxisExtent: 220,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 20,
-                  maxCrossAxisExtent: 220)
-              : const SliverGridDelegateWithFixedCrossAxisCount(
-                  mainAxisExtent: 220,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 20,
-                  crossAxisCount: 2,
-                ),
-          itemCount: count > 6 ? 6 : count,
-          shrinkWrap: true,
-          padding: EdgeInsets.zero,
-          physics: const NeverScrollableScrollPhysics(),
-          itemBuilder: (context, index) {
-            Food item = value.foodItems[index];
-            return GestureDetector(
+    Widget _gridItemWidget(Food item, BuildContext context) {
+    return GestureDetector(
               onTap: () {
                 Navigator.push(
                     context,
@@ -268,6 +246,34 @@ class GridViewBuild extends StatelessWidget {
                 ],
               ),
             );
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<FoodModel>(builder: (context, value, child) {
+      int count = value.foodItems.length;
+      bool isWideScreen = MediaQuery.of(context).size.width > 400;
+      return GridView.builder(
+          gridDelegate: isWideScreen
+              ? const SliverGridDelegateWithMaxCrossAxisExtent(
+                  mainAxisExtent: 220,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 20,
+                  maxCrossAxisExtent: 220)
+              : const SliverGridDelegateWithFixedCrossAxisCount(
+                  mainAxisExtent: 220,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 20,
+                  crossAxisCount: 2,
+                ),
+          itemCount: count > 6 ? 6 : count,
+          shrinkWrap: true,
+          padding: EdgeInsets.zero,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (context, index) {
+            Food item = value.foodItems[index];
+            return _gridItemWidget(item, context);
           });
     });
   }
