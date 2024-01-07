@@ -12,7 +12,9 @@ class AllFavourites extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Favourites'),backgroundColor: prmColor,foregroundColor: bgColor,
+          title: const Text('Favourites'),
+          backgroundColor: prmColor,
+          foregroundColor: bgColor,
         ),
         body: Consumer<RestaurantModel>(builder: (context, value, child) {
           return ListView.builder(
@@ -23,8 +25,8 @@ class AllFavourites extends StatelessWidget {
                   child: FavouriteView(
                     favItem: value.restaurants[index],
                     sliderWidth: double.infinity,
-                    sliderHeight: MediaQuery.of(context).size.width * (9 / 16),
-                    
+                    sliderHeight:
+                        MediaQuery.of(context).size.width * (9 / 16) + 50,
                   ),
                 );
               });
