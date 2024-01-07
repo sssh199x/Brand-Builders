@@ -15,7 +15,6 @@ class AllOrders extends StatelessWidget {
         foregroundColor: bgColor,
         title: const Text('Orders'),
       ),
-      //Just for the commit.
       body: Consumer<FoodModel>(
         builder: (context, value, child) {
           return ListView.builder(
@@ -25,7 +24,7 @@ class AllOrders extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: OrderView(
                   orderItem: value.foodItems[index],
-                  sliderHeight: MediaQuery.of(context).size.width * (9 / 16),
+                  sliderHeight: MediaQuery.of(context).size.width * (9 / 16) + 50 ,
                   sliderWidth: double.infinity,
                 ),
               );
