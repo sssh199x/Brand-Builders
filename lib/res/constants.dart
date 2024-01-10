@@ -33,17 +33,17 @@ const titleStyle = TextStyle(
     fontWeight: FontWeight.w600,
     color: txtColor);
 //for Restaurant Info
- const infoStyle = TextStyle(
+const infoStyle = TextStyle(
     fontSize: 15,
     fontFamily: 'Inter',
     fontWeight: FontWeight.w600,
-    color: txtColor);   
-    //for Restaurant Info Text
-    const infoStyleText = TextStyle(
+    color: txtColor);
+//for Restaurant Info Text
+const infoStyleText = TextStyle(
     fontSize: 13,
     fontFamily: 'Inter',
     fontWeight: FontWeight.w400,
-    color: txtColor);  
+    color: txtColor);
 
 //for rating and reviews
 const txtStyle1 = TextStyle(
