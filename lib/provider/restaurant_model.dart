@@ -7,6 +7,7 @@ class RestaurantModel with ChangeNotifier {
       name: 'French Crepie',
       description: 'French, Cafe, European, Healthy, Vegetarian Friendly, Vegan Options',
       image: 'assets/frenchcrepie.jpg',
+      foodimage: 'assets/frenchcrepiefood1.jpeg',
       rating: 4.5,
       reviews: 232,
       distance: 1.3,
@@ -17,6 +18,7 @@ class RestaurantModel with ChangeNotifier {
       name: 'Godfathers Pizzeria Pvt.Ltd.',
       description: 'Healthy and Hygienic fire wood pizza with the traditional wood fire oven.',
       image: 'assets/godfather.jpg',
+      foodimage: 'assets/pizza.jpg',
       rating: 4.5,
       reviews: 232,
       distance: 1.3,
@@ -27,6 +29,7 @@ class RestaurantModel with ChangeNotifier {
       name: 'Byanjan',
       description: 'Local cuisine, Indian, Contemporary, Nepali, International',
       image: 'assets/bhajyan.jpg',
+      foodimage: 'assets/byanjanfood.jpg',
       rating: 4.5,
       reviews: 232,
       distance: 1.3,
@@ -37,16 +40,22 @@ class RestaurantModel with ChangeNotifier {
       name: 'Roadhouse Cafe',
       description: 'Italian, Bar, Pizza, European, Diner, Vegetarian Friendly',
       image: 'assets/roadhouse.jpg',
+      foodimage: 'assets/roadhousefood.jpg',
       rating: 4.5,
       reviews: 232,
       distance: 1.3,
       time: 24,
+      // momos: ['Chicken Momo','Veg Momo'],
+      // fooddescription: ['Chicken,Soup & Flour','Smashed Vegetables,Soup & Flour'],
+      // foodprice: ['450','350'],
+
     ),
     Restaurant(
       restaurantinfo: 'Serves meat, vegan options available. Creperie and eatery that offers a few vegan crepe options.',
       name: 'French Crepie',
       description: 'French, Cafe, European, Healthy, Vegetarian Friendly, Vegan Options',
       image: 'assets/frenchcrepie.jpg',
+      foodimage: 'assets/frenchcrepiefood1.jpeg',
       rating: 4.5,
       reviews: 232,
       distance: 1.3,
@@ -56,11 +65,17 @@ class RestaurantModel with ChangeNotifier {
 }
 
 class Restaurant {
-  final String name, image, description,restaurantinfo;
+  final String name, image, description,restaurantinfo,foodimage;
   final double rating, distance;
   final int reviews, time;
+  //final List momos,fooddescription,foodprice;
+  
 
   Restaurant( {
+    // required this.momos,
+    // required this.fooddescription,
+    // required this.foodprice,
+    required this.foodimage,
     required this.restaurantinfo,
     required this.description,
     required this.name,
