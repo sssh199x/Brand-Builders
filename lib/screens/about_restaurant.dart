@@ -3,6 +3,7 @@ import 'package:marquee/marquee.dart';
 import 'package:ordering_app/provider/restaurant_model.dart';
 import 'package:ordering_app/res/constants.dart';
 import 'package:ordering_app/screens/food_info.dart';
+import 'package:ordering_app/screens/restaurant_info.dart';
 
 class AboutRestaurant extends StatefulWidget {
   const AboutRestaurant({super.key, required this.restaurant});
@@ -19,20 +20,18 @@ class _AboutRestaurantState extends State<AboutRestaurant>
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _tabController = TabController(length: 6, vsync: this);
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _tabController.dispose();
     super.dispose();
   }
 
-  Widget _buildPortraitStack(
-      double screenWidth, BuildContext context, double paddingSize) {
+  Widget _buildPortraitLandscapeStack(double screenWidth, BuildContext context,
+      double paddingSize, Orientation orientation) {
     return Stack(
       children: [
         Positioned(
@@ -42,7 +41,9 @@ class _AboutRestaurantState extends State<AboutRestaurant>
           child: Align(
             child: SizedBox(
               width: double.infinity,
-              height: screenWidth - 160,
+              height: orientation == Orientation.portrait
+                  ? screenWidth - 160
+                  : screenWidth - 720,
               child: Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
@@ -55,11 +56,17 @@ class _AboutRestaurantState extends State<AboutRestaurant>
         ),
         Positioned(
             left: 10,
-            top: screenWidth / 2.1694, //180,
+            top: orientation == Orientation.portrait
+                ? screenWidth / 2.1694
+                : screenWidth / 9.7733, //180 : 87,
             child: Align(
               child: SizedBox(
-                width: screenWidth / 5.1428, //i.e 80
-                height: screenWidth / 5.1428,
+                width: orientation == Orientation.portrait
+                    ? screenWidth / 5.1428
+                    : screenWidth / 13.7142, //i.e 80 : 62
+                height: orientation == Orientation.portrait
+                    ? screenWidth / 5.1428
+                    : screenWidth / 13.71425,
                 child: Container(
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
@@ -74,14 +81,20 @@ class _AboutRestaurantState extends State<AboutRestaurant>
             left: 10,
             child: Align(
               child: SizedBox(
-                width: screenWidth / 10.2857, // 40
-                height: screenWidth / 10.2857,
+                width: orientation == Orientation.portrait
+                    ? screenWidth / 10.2857
+                    : screenWidth / 24.2938, // 40 : 35
+                height: orientation == Orientation.portrait
+                    ? screenWidth / 10.2857
+                    : screenWidth / 24.2938,
                 child: Container(
                   decoration: const BoxDecoration(
                     color: Colors.white,
                     shape: BoxShape.circle,
                   ),
                   child: IconButton(
+                      iconSize:
+                          orientation == Orientation.portrait ? 24.0 : 15.0,
                       onPressed: () {
                         Navigator.pop(context);
                       },
@@ -94,102 +107,25 @@ class _AboutRestaurantState extends State<AboutRestaurant>
             right: 10,
             child: Align(
               child: SizedBox(
-                width: screenWidth / 10.2857, // 40
-                height: screenWidth / 10.2857,
+                width: orientation == Orientation.portrait
+                    ? screenWidth / 10.2857
+                    : screenWidth / 24.2938, // 40 : 35
+                height: orientation == Orientation.portrait
+                    ? screenWidth / 10.2857
+                    : screenWidth / 24.2938,
                 child: Container(
                   decoration: const BoxDecoration(
                     color: Colors.white,
                     shape: BoxShape.circle,
                   ),
                   child: IconButton(
-                      onPressed: () {}, icon: const Icon(Icons.search)),
+                      iconSize:
+                          orientation == Orientation.portrait ? 24.0 : 15.0,
+                      onPressed: () {},
+                      icon: const Icon(Icons.search)),
                 ),
               ),
             )),
-      ],
-    );
-  }
-
-  Widget _buildLandscapeStack(
-      double screenWidth, BuildContext context, double paddingSize) {
-    return Stack(
-      children: [
-        Positioned(
-          top: 0,
-          left: 0,
-          right: 0,
-          child: Align(
-            child: SizedBox(
-              width: double.infinity,
-              height: screenWidth - 720,
-              child: Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage(widget.restaurant.foodimage),
-                      fit: BoxFit.cover),
-                ),
-              ),
-            ),
-          ),
-        ),
-        Positioned(
-            left: 10,
-            top: screenWidth / 9.7733, //87,
-            child: Align(
-              child: SizedBox(
-                width: screenWidth / 13.7142, //i.e 62
-                height: screenWidth / 13.71425,
-                child: Container(
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                          image: AssetImage(widget.restaurant.image),
-                          fit: BoxFit.cover)),
-                ),
-              ),
-            )),
-        Positioned(
-          top: 10,
-          left: 10,
-          child: Align(
-            child: SizedBox(
-              width: screenWidth / 24.2938, //35
-              height: screenWidth / 24.2938,
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                ),
-                child: IconButton(
-                    iconSize: 15,
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: const Icon(Icons.arrow_back_ios_new)),
-              ),
-            ),
-          ),
-        ),
-        Positioned(
-          top: 10,
-          right: 10,
-          child: Align(
-            child: SizedBox(
-              width: screenWidth / 24.2938, //35
-              height: screenWidth / 24.2938,
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                ),
-                child: IconButton(
-                    iconSize: 15,
-                    onPressed: () {},
-                    icon: const Icon(Icons.search)),
-              ),
-            ),
-          ),
-        ),
       ],
     );
   }
@@ -263,7 +199,14 @@ class _AboutRestaurantState extends State<AboutRestaurant>
           FittedBox(
             fit: BoxFit.cover,
             child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          RestaurantInfo(restaurant: widget.restaurant),
+                    ));
+              },
               icon: const Icon(
                 Icons.arrow_forward_ios,
                 color: prmColor,
@@ -314,6 +257,371 @@ class _AboutRestaurantState extends State<AboutRestaurant>
     );
   }
 
+  Widget _buildTabBar() {
+    return SizedBox(
+      height: 30,
+      width: double.infinity,
+      child: TabBar(
+        tabs: const [
+          Tab(
+            child: Text(
+              'Momo',
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
+          Tab(
+            child: Text('Pizza', style: TextStyle(color: Colors.black)),
+          ),
+          Tab(
+            child: Text('Chowmein', style: TextStyle(color: Colors.black)),
+          ),
+          Tab(
+            child: Text('Snacks', style: TextStyle(color: Colors.black)),
+          ),
+          Tab(
+            child: Text('Seafood', style: TextStyle(color: Colors.black)),
+          ),
+          Tab(
+            child: Text('Burger', style: TextStyle(color: Colors.black)),
+          ),
+        ],
+        isScrollable: true,
+        controller: _tabController,
+        indicatorColor: txtColor,
+        tabAlignment: TabAlignment.center,
+      ),
+    );
+  }
+
+  Widget _buildPortraitTabBarView() {
+    return Expanded(
+      child: TabBarView(controller: _tabController, children: [
+        ListView.separated(
+          separatorBuilder: (context, index) => const Divider(
+            height: 1,
+          ),
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const FoodInfo(),
+                    ));
+              },
+              child: const Padding(
+                padding: EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
+                child: ListTile(
+                  title: Text('Chicken Momo'),
+                  subtitle: Text('Chicken,Soup'),
+                  trailing: Text('Rs 500'),
+                ),
+              ),
+            );
+          },
+          itemCount: 10,
+        ),
+        ListView.separated(
+          separatorBuilder: (context, index) => const Divider(
+            height: 1,
+          ),
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const FoodInfo(),
+                    ));
+              },
+              child: const Padding(
+                padding: EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
+                child: ListTile(
+                  title: Text('Chicken Momo'),
+                  subtitle: Text('Chicken,Soup'),
+                  trailing: Text('Rs 500'),
+                ),
+              ),
+            );
+          },
+          itemCount: 10,
+        ),
+        ListView.separated(
+          separatorBuilder: (context, index) => const Divider(
+            height: 1,
+          ),
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const FoodInfo(),
+                    ));
+              },
+              child: const Padding(
+                padding: EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
+                child: ListTile(
+                  title: Text('Chicken Momo'),
+                  subtitle: Text('Chicken,Soup'),
+                  trailing: Text('Rs 500'),
+                ),
+              ),
+            );
+          },
+          itemCount: 10,
+        ),
+        ListView.separated(
+          separatorBuilder: (context, index) => const Divider(
+            height: 1,
+          ),
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const FoodInfo(),
+                    ));
+              },
+              child: const Padding(
+                padding: EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
+                child: ListTile(
+                  title: Text('Chicken Momo'),
+                  subtitle: Text('Chicken,Soup'),
+                  trailing: Text('Rs 500'),
+                ),
+              ),
+            );
+          },
+          itemCount: 10,
+        ),
+        ListView.separated(
+          separatorBuilder: (context, index) => const Divider(
+            height: 1,
+          ),
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const FoodInfo(),
+                    ));
+              },
+              child: const Padding(
+                padding: EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
+                child: ListTile(
+                  title: Text('Chicken Momo'),
+                  subtitle: Text('Chicken,Soup'),
+                  trailing: Text('Rs 500'),
+                ),
+              ),
+            );
+          },
+          itemCount: 10,
+        ),
+        ListView.separated(
+          separatorBuilder: (context, index) => const Divider(
+            height: 1,
+          ),
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const FoodInfo(),
+                    ));
+              },
+              child: const Padding(
+                padding: EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
+                child: ListTile(
+                  title: Text('Chicken Momo'),
+                  subtitle: Text('Chicken,Soup'),
+                  trailing: Text('Rs 500'),
+                ),
+              ),
+            );
+          },
+          itemCount: 10,
+        ),
+      ]),
+    );
+  }
+
+  Widget _buildLandscapeTabBarView(double screenWidth) {
+    return SizedBox(
+      height: screenWidth + screenWidth / 2,
+      width: double.infinity,
+      //color: Colors.black12,
+      child: TabBarView(controller: _tabController, children: [
+        ListView.separated(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          separatorBuilder: (context, index) => const Divider(
+            height: 1,
+          ),
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const FoodInfo(),
+                    ));
+              },
+              child: const Padding(
+                padding: EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
+                child: ListTile(
+                  title: Text('Chicken Momo'),
+                  subtitle: Text('Chicken,Soup'),
+                  trailing: Text('Rs 500'),
+                ),
+              ),
+            );
+          },
+          itemCount: 15,
+        ),
+        ListView.separated(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          separatorBuilder: (context, index) => const Divider(
+            height: 1,
+          ),
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const FoodInfo(),
+                    ));
+              },
+              child: const Padding(
+                padding: EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
+                child: ListTile(
+                  title: Text('Chicken Momo'),
+                  subtitle: Text('Chicken,Soup'),
+                  trailing: Text('Rs 500'),
+                ),
+              ),
+            );
+          },
+          itemCount: 15,
+        ),
+        ListView.separated(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          separatorBuilder: (context, index) => const Divider(
+            height: 1,
+          ),
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const FoodInfo(),
+                    ));
+              },
+              child: const Padding(
+                padding: EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
+                child: ListTile(
+                  title: Text('Chicken Momo'),
+                  subtitle: Text('Chicken,Soup'),
+                  trailing: Text('Rs 500'),
+                ),
+              ),
+            );
+          },
+          itemCount: 15,
+        ),
+        ListView.separated(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          separatorBuilder: (context, index) => const Divider(
+            height: 1,
+          ),
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const FoodInfo(),
+                    ));
+              },
+              child: const Padding(
+                padding: EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
+                child: ListTile(
+                  title: Text('Chicken Momo'),
+                  subtitle: Text('Chicken,Soup'),
+                  trailing: Text('Rs 500'),
+                ),
+              ),
+            );
+          },
+          itemCount: 15,
+        ),
+        ListView.separated(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          separatorBuilder: (context, index) => const Divider(
+            height: 1,
+          ),
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const FoodInfo(),
+                    ));
+              },
+              child: const Padding(
+                padding: EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
+                child: ListTile(
+                  title: Text('Chicken Momo'),
+                  subtitle: Text('Chicken,Soup'),
+                  trailing: Text('Rs 500'),
+                ),
+              ),
+            );
+          },
+          itemCount: 15,
+        ),
+        ListView.separated(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          separatorBuilder: (context, index) => const Divider(
+            height: 1,
+          ),
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const FoodInfo(),
+                    ));
+              },
+              child: const Padding(
+                padding: EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
+                child: ListTile(
+                  title: Text('Chicken Momo'),
+                  subtitle: Text('Chicken,Soup'),
+                  trailing: Text('Rs 500'),
+                ),
+              ),
+            );
+          },
+          itemCount: 15,
+        ),
+      ]),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     double paddingSize = MediaQuery.of(context).size.width * 0.04;
@@ -327,220 +635,16 @@ class _AboutRestaurantState extends State<AboutRestaurant>
                 Container(
                   margin:
                       EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-                  //color: Colors.amber,
                   width: double.infinity,
-                  height: orientation == Orientation.portrait
-                      ? screenWidth - 140
-                      : screenWidth - 700,
-                  child: orientation == Orientation.portrait
-                      ? _buildPortraitStack(screenWidth, context, paddingSize)
-                      : _buildLandscapeStack(screenWidth, context, paddingSize),
+                  height: screenWidth - 140,
+                  child: _buildPortraitLandscapeStack(
+                      screenWidth, context, paddingSize, orientation),
                 ),
                 _buildsWholeRestaurantDescription(
                     paddingSize, screenWidth, orientation),
                 Expanded(
                   child: Column(
-                    children: [
-                      SizedBox(
-                        height: 30,
-                        width: double.infinity,
-                        child: TabBar(
-                          tabs: const [
-                            Tab(
-                              child: Text(
-                                'Momo',
-                                style: TextStyle(color: Colors.black),
-                              ),
-                            ),
-                            Tab(
-                              child: Text('Pizza',
-                                  style: TextStyle(color: Colors.black)),
-                            ),
-                            Tab(
-                              child: Text('Chowmein',
-                                  style: TextStyle(color: Colors.black)),
-                            ),
-                            Tab(
-                              child: Text('Snacks',
-                                  style: TextStyle(color: Colors.black)),
-                            ),
-                            Tab(
-                              child: Text('Seafood',
-                                  style: TextStyle(color: Colors.black)),
-                            ),
-                            Tab(
-                              child: Text('Burger',
-                                  style: TextStyle(color: Colors.black)),
-                            ),
-                          ],
-                          isScrollable: true,
-                          controller: _tabController,
-                          indicatorColor: txtColor,
-                          tabAlignment: TabAlignment.center,
-                        ),
-                      ),
-                      Expanded(
-                        child:
-                            TabBarView(controller: _tabController, children: [
-                          ListView.separated(
-                            separatorBuilder: (context, index) => const Divider(
-                              height: 1,
-                            ),
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => const FoodInfo(),
-                                      ));
-                                },
-                                child: const Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 8.0, right: 8.0, bottom: 8.0),
-                                  child: ListTile(
-                                    title: Text('Chicken Momo'),
-                                    subtitle: Text('Chicken,Soup'),
-                                    trailing: Text('Rs 500'),
-                                  ),
-                                ),
-                              );
-                            },
-                            itemCount: 10,
-                          ),
-                          ListView.separated(
-                            separatorBuilder: (context, index) => const Divider(
-                              height: 1,
-                            ),
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => const FoodInfo(),
-                                      ));
-                                },
-                                child: const Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 8.0, right: 8.0, bottom: 8.0),
-                                  child: ListTile(
-                                    title: Text('Chicken Momo'),
-                                    subtitle: Text('Chicken,Soup'),
-                                    trailing: Text('Rs 500'),
-                                  ),
-                                ),
-                              );
-                            },
-                            itemCount: 10,
-                          ),
-                          ListView.separated(
-                            separatorBuilder: (context, index) => const Divider(
-                              height: 1,
-                            ),
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => const FoodInfo(),
-                                      ));
-                                },
-                                child: const Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 8.0, right: 8.0, bottom: 8.0),
-                                  child: ListTile(
-                                    title: Text('Chicken Momo'),
-                                    subtitle: Text('Chicken,Soup'),
-                                    trailing: Text('Rs 500'),
-                                  ),
-                                ),
-                              );
-                            },
-                            itemCount: 10,
-                          ),
-                          ListView.separated(
-                            separatorBuilder: (context, index) => const Divider(
-                              height: 1,
-                            ),
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => const FoodInfo(),
-                                      ));
-                                },
-                                child: const Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 8.0, right: 8.0, bottom: 8.0),
-                                  child: ListTile(
-                                    title: Text('Chicken Momo'),
-                                    subtitle: Text('Chicken,Soup'),
-                                    trailing: Text('Rs 500'),
-                                  ),
-                                ),
-                              );
-                            },
-                            itemCount: 10,
-                          ),
-                          ListView.separated(
-                            separatorBuilder: (context, index) => const Divider(
-                              height: 1,
-                            ),
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => const FoodInfo(),
-                                      ));
-                                },
-                                child: const Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 8.0, right: 8.0, bottom: 8.0),
-                                  child: ListTile(
-                                    title: Text('Chicken Momo'),
-                                    subtitle: Text('Chicken,Soup'),
-                                    trailing: Text('Rs 500'),
-                                  ),
-                                ),
-                              );
-                            },
-                            itemCount: 10,
-                          ),
-                          ListView.separated(
-                            separatorBuilder: (context, index) => const Divider(
-                              height: 1,
-                            ),
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => const FoodInfo(),
-                                      ));
-                                },
-                                child: const Padding(
-                                  padding: EdgeInsets.only(
-                                      left: 8.0, right: 8.0, bottom: 8.0),
-                                  child: ListTile(
-                                    title: Text('Chicken Momo'),
-                                    subtitle: Text('Chicken,Soup'),
-                                    trailing: Text('Rs 500'),
-                                  ),
-                                ),
-                              );
-                            },
-                            itemCount: 10,
-                          ),
-                        ]),
-                      )
-                    ],
+                    children: [_buildTabBar(), _buildPortraitTabBarView()],
                   ),
                 ),
               ],
@@ -551,231 +655,15 @@ class _AboutRestaurantState extends State<AboutRestaurant>
                   Container(
                     margin: EdgeInsets.only(
                         top: MediaQuery.of(context).padding.top),
-                    //color: Colors.amber,
                     width: double.infinity,
-                    height: orientation == Orientation.portrait
-                        ? screenWidth - 140
-                        : screenWidth - 700,
-                    child: orientation == Orientation.portrait
-                        ? _buildPortraitStack(screenWidth, context, paddingSize)
-                        : _buildLandscapeStack(
-                            screenWidth, context, paddingSize),
+                    height: screenWidth - 700,
+                    child: _buildPortraitLandscapeStack(
+                        screenWidth, context, paddingSize, orientation),
                   ),
                   _buildsWholeRestaurantDescription(
                       paddingSize, screenWidth, orientation),
-                  SizedBox(
-                    height: 30,
-                    width: double.infinity,
-                    child: TabBar(
-                      tabs: const [
-                        Tab(
-                          child: Text(
-                            'Momo',
-                            style: TextStyle(color: Colors.black),
-                          ),
-                        ),
-                        Tab(
-                          child: Text('Pizza',
-                              style: TextStyle(color: Colors.black)),
-                        ),
-                        Tab(
-                          child: Text('Chowmein',
-                              style: TextStyle(color: Colors.black)),
-                        ),
-                        Tab(
-                          child: Text('Snacks',
-                              style: TextStyle(color: Colors.black)),
-                        ),
-                        Tab(
-                          child: Text('Seafood',
-                              style: TextStyle(color: Colors.black)),
-                        ),
-                        Tab(
-                          child: Text('Burger',
-                              style: TextStyle(color: Colors.black)),
-                        ),
-                      ],
-                      isScrollable: true,
-                      controller: _tabController,
-                      indicatorColor: txtColor,
-                      tabAlignment: TabAlignment.center,
-                    ),
-                  ),
-                  SizedBox(
-                    height: screenWidth + screenWidth / 2,
-                    width: double.infinity,
-                    //color: Colors.black12,
-                    child: TabBarView(controller: _tabController, children: [
-                      ListView.separated(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        separatorBuilder: (context, index) => const Divider(
-                          height: 1,
-                        ),
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const FoodInfo(),
-                                  ));
-                            },
-                            child: const Padding(
-                              padding: EdgeInsets.only(
-                                  left: 8.0, right: 8.0, bottom: 8.0),
-                              child: ListTile(
-                                title: Text('Chicken Momo'),
-                                subtitle: Text('Chicken,Soup'),
-                                trailing: Text('Rs 500'),
-                              ),
-                            ),
-                          );
-                        },
-                        itemCount: 15,
-                      ),
-                      ListView.separated(
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        separatorBuilder: (context, index) => const Divider(
-                          height: 1,
-                        ),
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const FoodInfo(),
-                                  ));
-                            },
-                            child: const Padding(
-                              padding: EdgeInsets.only(
-                                  left: 8.0, right: 8.0, bottom: 8.0),
-                              child: ListTile(
-                                title: Text('Chicken Momo'),
-                                subtitle: Text('Chicken,Soup'),
-                                trailing: Text('Rs 500'),
-                              ),
-                            ),
-                          );
-                        },
-                        itemCount: 15,
-                      ),
-                      ListView.separated(
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        separatorBuilder: (context, index) => const Divider(
-                          height: 1,
-                        ),
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const FoodInfo(),
-                                  ));
-                            },
-                            child: const Padding(
-                              padding: EdgeInsets.only(
-                                  left: 8.0, right: 8.0, bottom: 8.0),
-                              child: ListTile(
-                                title: Text('Chicken Momo'),
-                                subtitle: Text('Chicken,Soup'),
-                                trailing: Text('Rs 500'),
-                              ),
-                            ),
-                          );
-                        },
-                        itemCount: 15,
-                      ),
-                      ListView.separated(
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        separatorBuilder: (context, index) => const Divider(
-                          height: 1,
-                        ),
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const FoodInfo(),
-                                  ));
-                            },
-                            child: const Padding(
-                              padding: EdgeInsets.only(
-                                  left: 8.0, right: 8.0, bottom: 8.0),
-                              child: ListTile(
-                                title: Text('Chicken Momo'),
-                                subtitle: Text('Chicken,Soup'),
-                                trailing: Text('Rs 500'),
-                              ),
-                            ),
-                          );
-                        },
-                        itemCount: 15,
-                      ),
-                      ListView.separated(
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        separatorBuilder: (context, index) => const Divider(
-                          height: 1,
-                        ),
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const FoodInfo(),
-                                  ));
-                            },
-                            child: const Padding(
-                              padding: EdgeInsets.only(
-                                  left: 8.0, right: 8.0, bottom: 8.0),
-                              child: ListTile(
-                                title: Text('Chicken Momo'),
-                                subtitle: Text('Chicken,Soup'),
-                                trailing: Text('Rs 500'),
-                              ),
-                            ),
-                          );
-                        },
-                        itemCount: 15,
-                      ),
-                      ListView.separated(
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        separatorBuilder: (context, index) => const Divider(
-                          height: 1,
-                        ),
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const FoodInfo(),
-                                  ));
-                            },
-                            child: const Padding(
-                              padding: EdgeInsets.only(
-                                  left: 8.0, right: 8.0, bottom: 8.0),
-                              child: ListTile(
-                                title: Text('Chicken Momo'),
-                                subtitle: Text('Chicken,Soup'),
-                                trailing: Text('Rs 500'),
-                              ),
-                            ),
-                          );
-                        },
-                        itemCount: 15,
-                      ),
-                    ]),
-                  ),
+                  _buildTabBar(),
+                  _buildLandscapeTabBarView(screenWidth),
                 ],
               ),
             ),
