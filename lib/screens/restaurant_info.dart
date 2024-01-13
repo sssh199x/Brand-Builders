@@ -7,10 +7,22 @@ class RestaurantInfo extends StatelessWidget {
   const RestaurantInfo({super.key, required this.restaurant});
   final Restaurant restaurant;
 
+  // String _buildMapImageUrl(double latitude, double longitude) {
+  //   // Google Maps Static API URL for a dynamic map image
+  //   final apiKey =
+  //       'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude'; // Replace with your API key
+  //   const zoomLevel = 15;
+  //   const imageSize = '600x300'; // Adjust the size as needed
+
+  //   return 'https://maps.googleapis.com/maps/api/staticmap?center=$latitude,$longitude&zoom=$zoomLevel&size=$imageSize&key=$apiKey';
+  // }
+
   Widget _buildMapsContainer(BuildContext context, double paddingSize,
       double screenWidth, Orientation orientation) {
     return GestureDetector(
-      onTap: () => MapUtils.openMap(28.2153, 83.9585),
+      onTap: () async {
+        return await MapUtils.openMap(28.2153, 83.9585);
+      },
       child: Container(
         margin: EdgeInsets.only(left: paddingSize, right: paddingSize),
         width: double.infinity,
@@ -18,7 +30,8 @@ class RestaurantInfo extends StatelessWidget {
             ? screenWidth - 250
             : screenWidth / 6,
         decoration: BoxDecoration(
-          //image: const DecorationImage(image: AssetImage('')),
+          image: const DecorationImage(
+              fit: BoxFit.cover, image: AssetImage('assets/staticmap.png')),
           color: Colors.black12,
           borderRadius: BorderRadius.circular(10),
         ),
