@@ -7,6 +7,8 @@ import 'bottom_nav.dart';
 import 'res/constants.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  print('App Initialized Before Starting The runApp()');
   runApp(const MyApp());
 }
 
@@ -31,7 +33,9 @@ class MyApp extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         builder: (context, child) {
-          final scale = MediaQuery.of(context).textScaler.clamp(minScaleFactor: 0.8, maxScaleFactor: 1.0);
+          final scale = MediaQuery.of(context)
+              .textScaler
+              .clamp(minScaleFactor: 0.8, maxScaleFactor: 1.0);
           return MediaQuery(
               data: MediaQuery.of(context).copyWith(textScaler: scale),
               child: child!);
