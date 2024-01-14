@@ -7,6 +7,7 @@ class RestaurantInfo extends StatelessWidget {
   const RestaurantInfo({super.key, required this.restaurant});
   final Restaurant restaurant;
 
+  // This works but i need google api key....
   // String _buildMapImageUrl(double latitude, double longitude) {
   //   // Google Maps Static API URL for a dynamic map image
   //   final apiKey =
@@ -21,7 +22,8 @@ class RestaurantInfo extends StatelessWidget {
       double screenWidth, Orientation orientation) {
     return GestureDetector(
       onTap: () async {
-        return await MapUtils.openMap(28.2153, 83.9585);
+        return await MapUtils.openMap(
+            restaurant.latitude, restaurant.longitude, context);
       },
       child: Container(
         margin: EdgeInsets.only(left: paddingSize, right: paddingSize),
@@ -84,7 +86,10 @@ class RestaurantInfo extends StatelessWidget {
                         restaurantSubtitle: restaurant.location,
                         leadingIcon: const Icon(Icons.location_city),
                         trailingIconButton: IconButton(
-                            onPressed: () {},
+                            onPressed: () async {
+                              return await MapUtils.openMap(restaurant.latitude,
+                                  restaurant.longitude, context);
+                            },
                             icon: const Icon(Icons.arrow_outward)),
                       ),
                       ListTileBuilder(
@@ -92,7 +97,10 @@ class RestaurantInfo extends StatelessWidget {
                         restaurantName: restaurant.contactno,
                         leadingIcon: const Icon(Icons.call),
                         trailingIconButton: IconButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            return await MapUtils.openDialPad(
+                                restaurant.contactno, context);
+                          },
                           icon: const Icon(Icons.arrow_outward),
                         ),
                       ),
@@ -130,7 +138,12 @@ class RestaurantInfo extends StatelessWidget {
                           restaurantSubtitle: restaurant.location,
                           leadingIcon: const Icon(Icons.location_city),
                           trailingIconButton: IconButton(
-                              onPressed: () {},
+                              onPressed: () async {
+                                return await MapUtils.openMap(
+                                    restaurant.latitude,
+                                    restaurant.longitude,
+                                    context);
+                              },
                               icon: const Icon(Icons.arrow_outward)),
                         ),
                         ListTileBuilder(
@@ -138,7 +151,10 @@ class RestaurantInfo extends StatelessWidget {
                           restaurantName: restaurant.contactno,
                           leadingIcon: const Icon(Icons.call),
                           trailingIconButton: IconButton(
-                            onPressed: () {},
+                            onPressed: () async {
+                              return await MapUtils.openDialPad(
+                                  restaurant.contactno, context);
+                            },
                             icon: const Icon(Icons.arrow_outward),
                           ),
                         ),
