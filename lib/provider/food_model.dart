@@ -13,7 +13,7 @@ class FoodModel with ChangeNotifier {
         isVeg: false),
     Food(
         name: 'Margherita Pizza',
-        restaurant: 'Godfathers Pizzeria',
+        restaurant: 'Godfathers Pizzeria Pvt.Ltd.',
         image: 'assets/pizza.jpg',
         rating: 4.5,
         reviews: 232,
