@@ -9,6 +9,7 @@ class PortraitLandscapeStack extends StatelessWidget {
     required this.context,
     required this.paddingSize,
     required this.orientation,
+    this.includeAvatar = true,
   });
 
   final AboutRestaurant widget;
@@ -16,6 +17,7 @@ class PortraitLandscapeStack extends StatelessWidget {
   final BuildContext context;
   final double paddingSize;
   final Orientation orientation;
+  final bool includeAvatar;
 
   @override
   Widget build(BuildContext context) {
@@ -34,14 +36,17 @@ class PortraitLandscapeStack extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage(widget.restaurant.foodimage),
+                      image: AssetImage(widget.restaurant.foodimageforrestro),
+                      // includeAvatar ? AssetImage(widget.restaurant.foodimageforrestro) : AssetImage(food.foodItems.first.image),
                       fit: BoxFit.cover),
                 ),
               ),
             ),
           ),
         ),
-        Positioned(
+        // In Dart, an if statement without curly braces {} can be used for a single statement after the if condition.If the if statement or the block inside it contains only one statement, the curly braces can be omitted.
+        if (includeAvatar)
+          Positioned(
             left: 10,
             top: orientation == Orientation.portrait
                 ? screenWidth / 2.1694
@@ -62,7 +67,8 @@ class PortraitLandscapeStack extends StatelessWidget {
                           fit: BoxFit.cover)),
                 ),
               ),
-            )),
+            ),
+          ),
         Positioned(
             top: 10,
             left: 10,
