@@ -23,8 +23,8 @@ class PopularAll extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: RestaurantView(
                   restaurant: value.restaurants[index],
-                  sliderHeight: screenWidth *
-                      (9 / 16) + 50, // (9/16 = 0.5625, 411.42857 * 0.5625 = 231.428)
+                  sliderHeight: screenWidth * (9 / 16) +
+                      50, // (9/16 = 0.5625, 411.42857 * 0.5625 = 231.428)
                   sliderWidth: double.infinity,
                 ),
               );
