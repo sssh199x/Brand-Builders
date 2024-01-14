@@ -207,7 +207,9 @@ class _AboutRestaurantState extends State<AboutRestaurant>
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const FoodInfo(),
+                      builder: (context) => FoodInfo(
+                          restaurant:
+                              AboutRestaurant(restaurant: widget.restaurant)),
                     ));
               },
               child: const Padding(
@@ -232,7 +234,9 @@ class _AboutRestaurantState extends State<AboutRestaurant>
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const FoodInfo(),
+                      builder: (context) => FoodInfo(
+                          restaurant:
+                              AboutRestaurant(restaurant: widget.restaurant)),
                     ));
               },
               child: const Padding(
@@ -257,7 +261,9 @@ class _AboutRestaurantState extends State<AboutRestaurant>
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const FoodInfo(),
+                      builder: (context) => FoodInfo(
+                          restaurant:
+                              AboutRestaurant(restaurant: widget.restaurant)),
                     ));
               },
               child: const Padding(
@@ -282,7 +288,9 @@ class _AboutRestaurantState extends State<AboutRestaurant>
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const FoodInfo(),
+                      builder: (context) => FoodInfo(
+                          restaurant:
+                              AboutRestaurant(restaurant: widget.restaurant)),
                     ));
               },
               child: const Padding(
@@ -307,7 +315,9 @@ class _AboutRestaurantState extends State<AboutRestaurant>
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const FoodInfo(),
+                      builder: (context) => FoodInfo(
+                          restaurant:
+                              AboutRestaurant(restaurant: widget.restaurant)),
                     ));
               },
               child: const Padding(
@@ -332,7 +342,9 @@ class _AboutRestaurantState extends State<AboutRestaurant>
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const FoodInfo(),
+                      builder: (context) => FoodInfo(
+                          restaurant:
+                              AboutRestaurant(restaurant: widget.restaurant)),
                     ));
               },
               child: const Padding(
@@ -369,7 +381,9 @@ class _AboutRestaurantState extends State<AboutRestaurant>
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const FoodInfo(),
+                      builder: (context) => FoodInfo(
+                          restaurant:
+                              AboutRestaurant(restaurant: widget.restaurant)),
                     ));
               },
               child: const Padding(
@@ -396,7 +410,9 @@ class _AboutRestaurantState extends State<AboutRestaurant>
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const FoodInfo(),
+                      builder: (context) => FoodInfo(
+                          restaurant:
+                              AboutRestaurant(restaurant: widget.restaurant)),
                     ));
               },
               child: const Padding(
@@ -423,7 +439,9 @@ class _AboutRestaurantState extends State<AboutRestaurant>
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const FoodInfo(),
+                      builder: (context) => FoodInfo(
+                          restaurant:
+                              AboutRestaurant(restaurant: widget.restaurant)),
                     ));
               },
               child: const Padding(
@@ -450,7 +468,9 @@ class _AboutRestaurantState extends State<AboutRestaurant>
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const FoodInfo(),
+                      builder: (context) => FoodInfo(
+                          restaurant:
+                              AboutRestaurant(restaurant: widget.restaurant)),
                     ));
               },
               child: const Padding(
@@ -477,7 +497,9 @@ class _AboutRestaurantState extends State<AboutRestaurant>
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const FoodInfo(),
+                      builder: (context) => FoodInfo(
+                          restaurant:
+                              AboutRestaurant(restaurant: widget.restaurant)),
                     ));
               },
               child: const Padding(
@@ -504,7 +526,9 @@ class _AboutRestaurantState extends State<AboutRestaurant>
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const FoodInfo(),
+                      builder: (context) => FoodInfo(
+                          restaurant:
+                              AboutRestaurant(restaurant: widget.restaurant)),
                     ));
               },
               child: const Padding(
