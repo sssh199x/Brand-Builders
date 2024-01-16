@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 class FoodModel with ChangeNotifier {
   final _foodItems = [
     Food(
+        categoryIndex: 0,
         name: 'Chicken Steam Momo',
         restaurant: 'Byanjan',
         image: 'assets/chickenmomo.jpg',
@@ -12,6 +13,7 @@ class FoodModel with ChangeNotifier {
         price: 350,
         isVeg: false),
     Food(
+        categoryIndex: 1,
         name: 'Margherita Pizza',
         restaurant: 'Godfathers Pizzeria Pvt.Ltd.',
         image: 'assets/pizza.jpg',
@@ -21,6 +23,7 @@ class FoodModel with ChangeNotifier {
         price: 700,
         isVeg: false),
     Food(
+        categoryIndex: 3,
         name: 'Veg Wrap',
         restaurant: 'French Crepie',
         image: 'assets/vegwrap.jpg',
@@ -30,6 +33,7 @@ class FoodModel with ChangeNotifier {
         price: 240,
         isVeg: true),
     Food(
+        categoryIndex: 0,
         name: 'Veg Steam Momo',
         restaurant: 'Byanjan',
         image: 'assets/chickenmomo.jpg',
@@ -39,6 +43,7 @@ class FoodModel with ChangeNotifier {
         price: 300,
         isVeg: true),
     Food(
+        categoryIndex: 3,
         name: 'Roadhouse Special Pasta',
         restaurant: 'Roadhouse Cafe',
         image: 'assets/pasta.jpg',
@@ -46,7 +51,17 @@ class FoodModel with ChangeNotifier {
         reviews: 232,
         distance: 1.3,
         price: 395,
-        isVeg: true)
+        isVeg: true),
+    Food(
+        categoryIndex: 2,
+        name: 'Chowmein',
+        restaurant: 'Roadhouse Cafe',
+        image: 'assets/chowmein.webp',
+        rating: 4.5,
+        reviews: 232,
+        distance: 1.3,
+        price: 395,
+        isVeg: false)
   ];
 
   String _filter = 'All';
@@ -94,9 +109,11 @@ class Food {
   final double rating, distance, price;
   final int reviews;
   final bool isVeg;
+  final int categoryIndex;
 
   Food(
-      {required this.name,
+      {required this.categoryIndex,
+      required this.name,
       required this.restaurant,
       required this.image,
       required this.rating,
