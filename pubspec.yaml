@@ -45,6 +45,7 @@ dependencies:
   open_street_map_search_and_pick: ^0.1.1
   marquee: ^2.2.3
   url_launcher: ^6.2.3
+  counter_button: ^1.0.1
 
 dev_dependencies:
   flutter_test:
