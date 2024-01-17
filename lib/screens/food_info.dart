@@ -1,12 +1,40 @@
+import 'package:counter_button/counter_button.dart';
 import 'package:flutter/material.dart';
 import 'package:ordering_app/provider/food_model.dart';
-import 'package:provider/provider.dart';
+import 'package:ordering_app/res/constants.dart';
 
-class FoodInfo extends StatelessWidget {
+class FoodInfo extends StatefulWidget {
   const FoodInfo({super.key, required this.foods});
   final Food foods;
+
+  @override
+  State<FoodInfo> createState() => _FoodInfoState();
+}
+
+class _FoodInfoState extends State<FoodInfo> {
+  int _counterValue = 0;
+  bool isLoading = false; // Add this line to manage loading state
+
+  // Function to start loading and simulate delay
+  void startLoading() {
+    setState(() {
+      isLoading = true;
+    });
+
+    // Simulate a delay (e.g., 2 seconds) before stopping the loading state
+    Future.delayed(const Duration(milliseconds: 500), () {
+      setState(() {
+        isLoading = false;
+      });
+    });
+  }
+
   Widget _buildPortraitStackForFoodInfo(
-      BuildContext context, Orientation orientation, double screenWidth) {
+      BuildContext context,
+      Orientation orientation,
+      double screenWidth,
+      double paddingSize,
+      double landscapepaddingSize) {
     return Stack(
       children: [
         Positioned(
@@ -19,27 +47,39 @@ class FoodInfo extends StatelessWidget {
               height: orientation == Orientation.portrait
                   ? screenWidth - 160
                   : screenWidth - 720,
-              child: Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage(foods.image),
-                      // includeAvatar ? AssetImage(widget.restaurant.foodimageforrestro) : AssetImage(food.foodItems.first.image),
-                      fit: BoxFit.cover),
-                ),
-              ),
+              child: orientation == Orientation.portrait
+                  ? Container(
+                      margin: EdgeInsets.only(
+                          top: paddingSize,
+                          left: paddingSize,
+                          right: paddingSize),
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage(widget.foods.image),
+                            fit: BoxFit.cover),
+                      ),
+                    )
+                  : Container(
+                      margin: EdgeInsets.all(landscapepaddingSize),
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage(widget.foods.image),
+                            fit: BoxFit.cover),
+                      ),
+                    ),
             ),
           ),
         ),
         Positioned(
-            top: 10,
-            left: 10,
+            top: orientation == Orientation.portrait ? 20 : 10,
+            left: orientation == Orientation.portrait ? 10 : 5,
             child: Align(
               child: SizedBox(
                 width: orientation == Orientation.portrait
-                    ? screenWidth / 10.2857
-                    : screenWidth / 24.2938, // 40 : 35
+                    ? screenWidth / 9.1428
+                    : screenWidth / 24.2938, // 45 : 35
                 height: orientation == Orientation.portrait
-                    ? screenWidth / 10.2857
+                    ? screenWidth / 13.7142 //30
                     : screenWidth / 24.2938,
                 child: Container(
                   decoration: const BoxDecoration(
@@ -48,7 +88,7 @@ class FoodInfo extends StatelessWidget {
                   ),
                   child: IconButton(
                       iconSize:
-                          orientation == Orientation.portrait ? 24.0 : 15.0,
+                          orientation == Orientation.portrait ? 15.0 : 12.0,
                       onPressed: () {
                         Navigator.pop(context);
                       },
@@ -57,15 +97,15 @@ class FoodInfo extends StatelessWidget {
               ),
             )),
         Positioned(
-            top: 10,
-            right: 10,
+            top: orientation == Orientation.portrait ? 20 : 10,
+            right: orientation == Orientation.portrait ? 10 : 5,
             child: Align(
               child: SizedBox(
                 width: orientation == Orientation.portrait
-                    ? screenWidth / 10.2857
-                    : screenWidth / 24.2938, // 40 : 35
+                    ? screenWidth / 9.142
+                    : screenWidth / 24.2938, // 45 : 35
                 height: orientation == Orientation.portrait
-                    ? screenWidth / 10.2857
+                    ? screenWidth / 13.7142 // 30
                     : screenWidth / 24.2938,
                 child: Container(
                   decoration: const BoxDecoration(
@@ -74,9 +114,9 @@ class FoodInfo extends StatelessWidget {
                   ),
                   child: IconButton(
                       iconSize:
-                          orientation == Orientation.portrait ? 24.0 : 15.0,
+                          orientation == Orientation.portrait ? 15.0 : 12.0,
                       onPressed: () {},
-                      icon: const Icon(Icons.search)),
+                      icon: const Icon(Icons.favorite_border_outlined)),
                 ),
               ),
             )),
@@ -84,27 +124,143 @@ class FoodInfo extends StatelessWidget {
     );
   }
 
+  Widget _containerForPotraitStackFoodInfo(
+      double screenWidth,
+      Orientation orientation,
+      double paddingSize,
+      double landscapepaddingSize) {
+    return Container(
+      margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+      width: double.infinity,
+      height: orientation == Orientation.portrait
+          ? screenWidth - 160
+          : screenWidth - 720,
+      child: _buildPortraitStackForFoodInfo(
+          context, orientation, screenWidth, paddingSize, landscapepaddingSize),
+    );
+  }
+
+  Widget _buildFoodDescription(Orientation orientation, double paddingSize,
+      double landscapepaddingSize) {
+    return Container(
+      alignment: Alignment.centerLeft,
+      margin: orientation == Orientation.portrait
+          ? EdgeInsets.only(left: paddingSize, right: paddingSize)
+          : EdgeInsets.only(
+              left: landscapepaddingSize, right: landscapepaddingSize),
+      //color: Colors.amber,
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        Text(
+          widget.foods.name,
+          style: headerStyle.copyWith(fontSize: 20),
+        ),
+        Text(
+          'Rs ${widget.foods.price}',
+          style: infoStyleText,
+        )
+      ]),
+    );
+  }
+
+  Widget _buildFoodDetails(
+    Orientation orientation,
+    double paddingSize,
+    double landscapepaddingSize,
+  ) {
+    return Container(
+      //color: Colors.black12,
+      margin: orientation == Orientation.portrait
+          ? EdgeInsets.only(left: paddingSize, right: paddingSize)
+          : EdgeInsets.only(
+              left: landscapepaddingSize, right: landscapepaddingSize),
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        const Text(
+          'Details',
+          style: infoStyle,
+        ),
+        CounterButton(
+            progressColor: prmColor,
+            countColor: prmColor,
+            count: _counterValue,
+            buttonColor: txtColor,
+            onChange: (int value) {
+              setState(() {
+                startLoading();
+                _counterValue = value;
+              });
+            },
+            loading: isLoading)
+      ]),
+    );
+  }
+
+  Widget _buildFoodText(double paddingSize, double landscapepaddingSize,
+      Orientation orientation, double screenWidth) {
+    return Container(
+      height: orientation == Orientation.portrait
+          ? screenWidth / 1.5
+          : screenWidth / 6,
+      margin: orientation == Orientation.portrait
+          ? EdgeInsets.only(left: paddingSize, right: paddingSize)
+          : EdgeInsets.only(
+              left: landscapepaddingSize, right: landscapepaddingSize),
+      //color: Colors.amber,
+      child: Text(widget.foods.description,
+          style: infoStyleText.copyWith(fontWeight: FontWeight.w500)),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    double landscapepaddingSize = screenWidth * 0.005;
+    double paddingSize = screenWidth * 0.04;
     final orientation = MediaQuery.of(context).orientation;
-    return Scaffold(body: Consumer<FoodModel>(
-      builder: (context, value, child) {
-        return orientation == Orientation.portrait
+    return Scaffold(
+        body: orientation == Orientation.portrait
             ? Column(
                 children: [
-                  Container(
-                    margin: EdgeInsets.only(
-                        top: MediaQuery.of(context).padding.top),
-                    width: double.infinity,
-                    height: screenWidth - 140,
-                    child: _buildPortraitStackForFoodInfo(
-                        context, orientation, screenWidth),
-                  )
+                  _containerForPotraitStackFoodInfo(screenWidth, orientation,
+                      paddingSize, landscapepaddingSize),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  _buildFoodDescription(
+                      orientation, paddingSize, landscapepaddingSize),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  _buildFoodDetails(
+                      orientation, paddingSize, landscapepaddingSize),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  _buildFoodText(paddingSize, landscapepaddingSize, orientation,
+                      screenWidth)
                 ],
               )
-            : const Column();
-      },
-    ));
+            : SingleChildScrollView(
+                child: Column(
+                  children: [
+                    _containerForPotraitStackFoodInfo(screenWidth, orientation,
+                        paddingSize, landscapepaddingSize),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    _buildFoodDescription(
+                        orientation, paddingSize, landscapepaddingSize),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    _buildFoodDetails(
+                        orientation, paddingSize, landscapepaddingSize),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    _buildFoodText(paddingSize, landscapepaddingSize,
+                        orientation, screenWidth)
+                  ],
+                ),
+              ));
   }
 }
