@@ -174,9 +174,9 @@ class _FoodInfoState extends State<FoodInfo> {
           : EdgeInsets.only(
               left: landscapepaddingSize, right: landscapepaddingSize),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        const Text(
+        Text(
           'Details',
-          style: infoStyle,
+          style: infoStyle.copyWith(fontSize: 18),
         ),
         CounterButton(
             progressColor: prmColor,
@@ -197,16 +197,59 @@ class _FoodInfoState extends State<FoodInfo> {
   Widget _buildFoodText(double paddingSize, double landscapepaddingSize,
       Orientation orientation, double screenWidth) {
     return Container(
-      height: orientation == Orientation.portrait
-          ? screenWidth / 1.5
-          : screenWidth / 6,
       margin: orientation == Orientation.portrait
           ? EdgeInsets.only(left: paddingSize, right: paddingSize)
           : EdgeInsets.only(
               left: landscapepaddingSize, right: landscapepaddingSize),
       //color: Colors.amber,
-      child: Text(widget.foods.description,
-          style: infoStyleText.copyWith(fontWeight: FontWeight.w500)),
+      child: RichText(
+        softWrap: true,
+        strutStyle: const StrutStyle(
+          height: 1.8,
+        ),
+        maxLines: orientation == Orientation.portrait
+            ? 15
+            : 5, // Adjust maxLines as needed
+        overflow: TextOverflow.ellipsis,
+        text: TextSpan(
+          text: widget.foods.description,
+          style: infoStyleText.copyWith(
+            fontSize: 15,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildIngredientsText(Orientation orientation, double paddingSize,
+      double landscapepaddingSize) {
+    return Container(
+      alignment: Alignment.centerLeft,
+      margin: orientation == Orientation.portrait
+          ? EdgeInsets.only(left: paddingSize, right: paddingSize)
+          : EdgeInsets.only(
+              left: landscapepaddingSize, right: landscapepaddingSize),
+      //color: Colors.amber,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Text(
+            "Ingredients",
+            style: headerStyle.copyWith(fontSize: 18),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Text(
+            widget.foods.ingredients,
+            style: infoStyleText.copyWith(
+              fontSize: 15,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -236,7 +279,12 @@ class _FoodInfoState extends State<FoodInfo> {
                     height: 10,
                   ),
                   _buildFoodText(paddingSize, landscapepaddingSize, orientation,
-                      screenWidth)
+                      screenWidth),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  _buildIngredientsText(
+                      orientation, paddingSize, landscapepaddingSize),
                 ],
               )
             : SingleChildScrollView(
@@ -258,7 +306,12 @@ class _FoodInfoState extends State<FoodInfo> {
                       height: 10,
                     ),
                     _buildFoodText(paddingSize, landscapepaddingSize,
-                        orientation, screenWidth)
+                        orientation, screenWidth),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    _buildIngredientsText(
+                        orientation, paddingSize, landscapepaddingSize),
                   ],
                 ),
               ));
