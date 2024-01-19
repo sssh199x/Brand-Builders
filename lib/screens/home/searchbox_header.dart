@@ -67,92 +67,16 @@ class _SearchBoxHeaderState extends State<SearchBoxHeader> {
                     },
                   ),
                   _buildAddressWidget(context, value, screenWidth),
-                  // address == 'No Location'
-                  //     ? const CircularProgressIndicator()
-                  //     : SizedBox(
-                  //         width: MediaQuery.of(context).size.width < 420
-                  //             ? 280
-                  //             : 550,
-                  //         child: address == 'No Location Provided'
-                  //             ? InkWell(
-                  //                 onTap: () {
-                  //                   value.getLocationPermission();
-                  //                 },
-                  //                 child: Text(
-                  //                   address,
-                  //                   style: addStyle,
-                  //                   overflow: TextOverflow.ellipsis,
-                  //                 ),
-                  //               )
-                  //             : InkWell(
-                  //                 onTap: () {
-                  //                   Navigator.push(
-                  //                     context,
-                  //                     MaterialPageRoute(
-                  //                       builder: ((context) =>
-                  //                           const CurrentLocation()),
-                  //                     ),
-                  //                   );
-                  //                 },
-                  //                 child: Column(
-                  //                   mainAxisSize: MainAxisSize.min,
-                  //                   crossAxisAlignment:
-                  //                       CrossAxisAlignment.start,
-                  //                   children: [
-                  //                     const Text(
-                  //                       'Delivery to:',
-                  //                       style: addStyle,
-                  //                     ),
-                  //                     Expanded(
-                  //                       child: SizedBox(
-                  //                         width: MediaQuery.of(context)
-                  //                                     .size
-                  //                                     .width <
-                  //                                 420
-                  //                             ? 350
-                  //                             : 550,
-                  //                         child:  Marquee(
-                  //                                 startAfter: const Duration(
-                  //                                     seconds: 2),
-                  //                                 text: address,
-                  //                                 style: addStyle,
-                  //                                 scrollAxis: Axis.horizontal,
-                  //                                 crossAxisAlignment:
-                  //                                     CrossAxisAlignment.center,
-                  //                                 blankSpace: 5.0,
-                  //                                 velocity: 50.0,
-                  //                                 pauseAfterRound:
-                  //                                     const Duration(
-                  //                                         seconds: 1),
-                  //                                 accelerationDuration:
-                  //                                     const Duration(
-                  //                                         seconds: 1),
-                  //                                 accelerationCurve:
-                  //                                     Curves.linear,
-                  //                                 decelerationDuration:
-                  //                                     const Duration(
-                  //                                         milliseconds: 500),
-                  //                                 decelerationCurve:
-                  //                                     Curves.easeOut,
-                  //                               )
-
-                  //                       ),
-                  //                     ),
-                  //                   ],
-                  //                 ),
-                  //               ),
-                  //       ),
-                  Spacer(),
-                  SizedBox(
-                    width:30,
-                    child: IconButton(
-                      onPressed: () {
-                        print('Hello');
-                      },
-                      icon: const Icon(Icons.notifications_outlined),
-                      color: Colors.white,
-                    ),
-                  ),
+                  // const Spacer(),
+                  // SizedBox(
+                  //   child: IconButton(
+                  //     onPressed: () {
+                  //       print('Hello');
+                  //     },
+                  //     icon: const Icon(Icons.notifications_outlined),
+                  //     color: Colors.white,
+                  //   ),
+                  // ),
                 ],
               );
             }),
@@ -162,56 +86,6 @@ class _SearchBoxHeaderState extends State<SearchBoxHeader> {
             left: 0,
             right: 0,
             child: _buildSearchBox(paddingSize),
-            // Container(
-            //   margin: EdgeInsets.symmetric(horizontal: paddingSize),
-            //   height: 44,
-            //   decoration: BoxDecoration(
-            //     color: Colors.white,
-            //     borderRadius: BorderRadius.circular(10),
-            //     boxShadow: [
-            //       BoxShadow(
-            //         offset: const Offset(0, 3),
-            //         blurRadius: 5,
-            //         color: Colors.black.withOpacity(0.5),
-            //       ),
-            //     ],
-            //   ),
-            //   child: Center(
-            //     child: Row(
-            //       crossAxisAlignment: CrossAxisAlignment.center,
-            //       children: <Widget>[
-            //         Expanded(
-            //           child: TextField(
-            //             onChanged: (value) {},
-            //             decoration: InputDecoration(
-            //               contentPadding:
-            //                   const EdgeInsets.symmetric(vertical: 10),
-            //               hintText: "Search food or restaurant",
-            //               hintStyle: TextStyle(
-            //                 fontFamily: 'Inter',
-            //                 fontWeight: FontWeight.w400,
-            //                 fontSize: 13,
-            //                 color: txtColor.withOpacity(0.5),
-            //               ),
-            //               enabledBorder: InputBorder.none,
-            //               focusedBorder: InputBorder.none,
-            //               prefixIcon: IconButton(
-            //                 constraints: const BoxConstraints(),
-            //                 icon: const Icon(
-            //                   Icons.search,
-            //                   color: Colors.black,
-            //                   size: 24,
-            //                 ),
-            //                 onPressed: () {},
-            //               ),
-            //               prefixIconColor: Colors.black,
-            //             ),
-            //           ),
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
           ),
         ],
       ),
