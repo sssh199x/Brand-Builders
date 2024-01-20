@@ -34,9 +34,8 @@ class _SearchBoxHeaderState extends State<SearchBoxHeader> {
 
   @override
   Widget build(BuildContext context) {
-    double paddingSize = MediaQuery.of(context).size.width * 0.04;
     double screenWidth = MediaQuery.of(context).size.width;
-
+    double paddingSize = screenWidth * 0.04;
     return Container(
       margin: const EdgeInsets.only(bottom: 24),
       height: 110,
@@ -44,7 +43,11 @@ class _SearchBoxHeaderState extends State<SearchBoxHeader> {
         children: <Widget>[
           Container(
             padding: EdgeInsets.only(
-                left: paddingSize, right: paddingSize, bottom: 24, top: 10),
+              left: paddingSize,
+              right: paddingSize,
+              bottom: 24,
+              top: 10,
+            ),
             height: 88,
             decoration: const BoxDecoration(
               color: prmColor,
@@ -66,17 +69,21 @@ class _SearchBoxHeaderState extends State<SearchBoxHeader> {
                       }
                     },
                   ),
-                  _buildAddressWidget(context, value, screenWidth),
-                  // const Spacer(),
-                  // SizedBox(
-                  //   child: IconButton(
-                  //     onPressed: () {
-                  //       print('Hello');
-                  //     },
-                  //     icon: const Icon(Icons.notifications_outlined),
-                  //     color: Colors.white,
-                  //   ),
-                  // ),
+                  _buildAddressWidget1(
+                    context,
+                    value,
+                    screenWidth,
+                  ),
+                  const Spacer(),
+                  SizedBox(
+                    child: IconButton(
+                      onPressed: () {
+                        print('Hello');
+                      },
+                      icon: const Icon(Icons.circle_notifications_outlined),
+                      color: Colors.white,
+                    ),
+                  ),
                 ],
               );
             }),
@@ -132,67 +139,6 @@ class _CurrentLocationState extends State<CurrentLocation> {
   }
 }
 
-Widget _buildAddressWidget(
-    BuildContext context, LocationProvider value, double screenWidth) {
-  String address = value.address;
-  return address == 'No Location'
-      ? const CircularProgressIndicator()
-      : SizedBox(
-          width: screenWidth < 420 ? 280 : 550,
-          child: address == 'No Location Provided'
-              ? InkWell(
-                  onTap: () {
-                    value.getLocationPermission();
-                  },
-                  child: Text(
-                    address,
-                    style: addStyle,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                )
-              : InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: ((context) => const CurrentLocation()),
-                      ),
-                    );
-                  },
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Delivery to:',
-                        style: addStyle,
-                      ),
-                      Expanded(
-                        child: SizedBox(
-                          width: screenWidth < 420 ? 350 : 550,
-                          child: Marquee(
-                            startAfter: const Duration(seconds: 2),
-                            text: address,
-                            style: addStyle,
-                            scrollAxis: Axis.horizontal,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            blankSpace: 5.0,
-                            velocity: 50.0,
-                            pauseAfterRound: const Duration(seconds: 1),
-                            accelerationDuration: const Duration(seconds: 1),
-                            accelerationCurve: Curves.linear,
-                            decelerationDuration:
-                                const Duration(milliseconds: 500),
-                            decelerationCurve: Curves.easeOut,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-        );
-}
-
 Widget _buildSearchBox(double paddingSize) {
   return Container(
     margin: EdgeInsets.symmetric(horizontal: paddingSize),
@@ -243,4 +189,79 @@ Widget _buildSearchBox(double paddingSize) {
       ),
     ),
   );
+}
+
+Widget _buildAddressWidget1(
+  BuildContext context,
+  LocationProvider value,
+  double screenWidth,
+) {
+  String address = value.address;
+  return address == 'No Location'
+      ? const CircularProgressIndicator()
+      : Container(
+          //color: Colors.red,
+          child: address == 'No Location Provided'
+              ? InkWell(
+                  onTap: () {
+                    value.getLocationPermission();
+                  },
+                  child: Text(
+                    address,
+                    style: addStyle,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                )
+              : InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: ((context) => const CurrentLocation()),
+                      ),
+                    );
+                  },
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('Delivery To', style: addStyle),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      SizedBox(
+                        // Ensure the Row has a finite width constraint
+                        width: screenWidth - 180,
+                        // You can adjust this as needed
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: SizedBox(
+                                height: 20,
+                                child: Marquee(
+                                  startAfter: const Duration(seconds: 2),
+                                  text: address,
+                                  style: addStyle,
+                                  scrollAxis: Axis.horizontal,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  blankSpace: 5.0,
+                                  velocity: 50.0,
+                                  pauseAfterRound: const Duration(seconds: 1),
+                                  accelerationDuration:
+                                      const Duration(seconds: 1),
+                                  accelerationCurve: Curves.linear,
+                                  decelerationDuration:
+                                      const Duration(milliseconds: 500),
+                                  decelerationCurve: Curves.easeOut,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+        );
 }
