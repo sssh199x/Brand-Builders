@@ -17,6 +17,7 @@ class PopularRestaurants extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    Orientation orientation = Orientation.portrait;
     return Column(
       children: [
         Padding(
@@ -38,7 +39,7 @@ class PopularRestaurants extends StatelessWidget {
             },
           ),
         ),
-        _buildPopularRestSlider(context),
+        _buildPopularRestSlider(context, orientation),
         Divider(
           thickness: 2.0,
           color: const Color(0xFFF3F3F3).withOpacity(0.8),
@@ -102,15 +103,19 @@ class PopularRestaurants extends StatelessWidget {
 //     );
 //   }
 // }
-double calculateSliderHeight(double screenWidth) {
+double calculateSliderHeight(
+  double screenWidth,
+) {
   double aspectRatio = 9 / 16;
   double extraHeight = 40;
   return screenWidth * aspectRatio + extraHeight;
 }
 
-Widget _buildPopularRestSlider(BuildContext context) {
+Widget _buildPopularRestSlider(BuildContext context, Orientation orientation) {
   double screenWidth = MediaQuery.of(context).size.width;
-  double sliderWidth = screenWidth > 420 ? 420 : screenWidth;
+  double sliderWidth =
+      orientation == Orientation.portrait ? screenWidth : screenWidth;
+  // screenWidth > 420 ? 420 : screenWidth;
   double sliderHeight = calculateSliderHeight(screenWidth);
 
   return Container(
