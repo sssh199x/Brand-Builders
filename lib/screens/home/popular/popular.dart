@@ -17,36 +17,66 @@ class PopularRestaurants extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    Orientation orientation = Orientation.portrait;
-    return Column(
-      children: [
-        Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: screenWidth * 0.04), // 16.4571
-          child: SectionHeader(
-            key: UniqueKey(),
-            headerText: 'Popular In Your Area',
-            viewText: 'See More  >',
-            viewWidth: screenWidth *
-                0.2, // 0.196 i.e (80.6399 and overflow nahuna greater than 81 huna parxa so 0.2(82.2857) ) ma overflow janxa (Previously 87 thyo )
-            onViewClick: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: ((context) => const PopularAll()),
+    Orientation orientation = MediaQuery.of(context).orientation;
+    return orientation == Orientation.portrait
+        ? Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: screenWidth * 0.04), // 16.4571
+                child: SectionHeader(
+                  key: UniqueKey(),
+                  headerText: 'Popular In Your Area',
+                  viewText: 'See More  >',
+                  viewWidth: screenWidth *
+                      0.2, // 0.196 i.e (80.6399 and overflow nahuna greater than 81 huna parxa so 0.2(82.2857) ) ma overflow janxa (Previously 87 thyo )
+                  onViewClick: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: ((context) => const PopularAll()),
+                      ),
+                    );
+                  },
                 ),
-              );
-            },
-          ),
-        ),
-        _buildPopularRestSlider(context, orientation),
-        Divider(
-          thickness: 2.0,
-          color: const Color(0xFFF3F3F3).withOpacity(0.8),
-        ),
-        const SizedBox(height: 8),
-      ],
-    );
+              ),
+              _buildPopularRestSlider(screenWidth, orientation),
+              Divider(
+                thickness: 2.0,
+                color: const Color(0xFFF3F3F3).withOpacity(0.8),
+              ),
+              const SizedBox(height: 8),
+            ],
+          )
+        : Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: screenWidth * 0.04), // 16.4571
+                child: SectionHeader(
+                  key: UniqueKey(),
+                  headerText: 'Popular In Your Area',
+                  viewText: 'See More  >',
+                  viewWidth: screenWidth *
+                      0.2, // 0.196 i.e (80.6399 and overflow nahuna greater than 81 huna parxa so 0.2(82.2857) ) ma overflow janxa (Previously 87 thyo )
+                  onViewClick: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: ((context) => const PopularAll()),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              _buildPopularRestSlider(screenWidth, orientation),
+              Divider(
+                thickness: 2.0,
+                color: const Color(0xFFF3F3F3).withOpacity(0.8),
+              ),
+              const SizedBox(height: 8),
+            ],
+          );
   }
 }
 // In your case, the PopularRestSlider widget is not too large, and it doesn't seem to have complex logic or state. Therefore, separating it into a function within the same file (PopularRestaurants) may be a reasonable choice. If the widget grows in complexity or if you find yourself reusing it in different parts of your application, you might consider creating a separate class for it. So i will be commenting this code and make a function  which provides the same implementation
@@ -103,22 +133,29 @@ class PopularRestaurants extends StatelessWidget {
 //     );
 //   }
 // }
-double calculateSliderHeight(
-  double screenWidth,
-) {
+double calculateSliderHeight(double screenWidth, Orientation orientation) {
   double aspectRatio = 9 / 16;
   double extraHeight = 40;
-  return screenWidth * aspectRatio + extraHeight;
+  double reduceHeight = 150;
+
+  if (orientation == Orientation.portrait) {
+    return screenWidth * aspectRatio + extraHeight;
+  } else {
+    return screenWidth * aspectRatio - reduceHeight;
+  }
 }
 
-Widget _buildPopularRestSlider(BuildContext context, Orientation orientation) {
-  double screenWidth = MediaQuery.of(context).size.width;
+Widget _buildPopularRestSlider(double screenWidth, Orientation orientation) {
   double sliderWidth =
       orientation == Orientation.portrait ? screenWidth : screenWidth;
   // screenWidth > 420 ? 420 : screenWidth;
-  double sliderHeight = calculateSliderHeight(screenWidth);
+  double sliderHeight = orientation == Orientation.portrait
+      ? calculateSliderHeight(screenWidth, orientation)
+      : calculateSliderHeight(screenWidth, orientation);
+  print(calculateSliderHeight(screenWidth, orientation));
 
   return Container(
+    width: sliderWidth,
     margin: const EdgeInsets.only(top: 14, bottom: 5),
     height: sliderHeight,
     child: Consumer<RestaurantModel>(
@@ -137,8 +174,11 @@ Widget _buildPopularRestSlider(BuildContext context, Orientation orientation) {
             );
           },
           options: CarouselOptions(
+            enlargeCenterPage: true,
             aspectRatio: 16 / 9,
-            viewportFraction: sliderWidth * 0.92 / screenWidth,
+            viewportFraction: orientation == Orientation.portrait
+                ? sliderWidth * 0.92 / screenWidth
+                : sliderWidth * 0.9 / screenWidth,
             initialPage: 0,
             enableInfiniteScroll: true,
             autoPlay: true,
