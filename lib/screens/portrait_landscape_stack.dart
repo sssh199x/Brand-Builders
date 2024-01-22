@@ -46,7 +46,7 @@ class PortraitLandscapeStack extends StatelessWidget {
           left: 10,
           top: orientation == Orientation.portrait
               ? screenWidth / 2.1694
-              : screenWidth / 9.7733, //180 : 87,
+              : screenWidth / 6.1, //180 : 156.6386,
           child: Align(
             child: SizedBox(
               width: orientation == Orientation.portrait
