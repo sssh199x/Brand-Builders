@@ -79,7 +79,9 @@ class LocationProvider with ChangeNotifier {
       if (response.statusCode == 200) {
         return parseAddressResponse(response.body);
       } else {
-        return 'Failed to get address. Status code: ${response.statusCode}';
+        print('Failed to get address. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+        return 'Failed to get address.';
       }
       // When dealing with the API response, it's a good practice to check if the key(display_name) exists before accessing it
     } catch (e) {
