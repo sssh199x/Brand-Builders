@@ -68,7 +68,7 @@ class _ExploreFoodState extends State<ExploreFood> {
     );
   }
 
-  Widget _buildCategoryList() {
+  Widget _buildCategoryList(Orientation orientation, double screenWidth) {
     return SizedBox(
       height: 35,
       child: Consumer<FoodModel>(builder: (context, value, child) {
@@ -77,7 +77,13 @@ class _ExploreFoodState extends State<ExploreFood> {
             itemCount: value.exploreItems.length,
             itemBuilder: (context, index) {
               return Padding(
-                padding: const EdgeInsets.only(right: 16, bottom: 1, top: 1),
+                padding: orientation == Orientation.portrait
+                    ? const EdgeInsets.only(
+                        right: 16,
+                      )
+                    : EdgeInsets.only(
+                        right: screenWidth / 7,
+                      ),
                 child: GestureDetector(
                   onTap: () {
                     value.setSelectedItem(index);
@@ -115,7 +121,12 @@ class _ExploreFoodState extends State<ExploreFood> {
   }
 
   Widget _buildFoodList() {
-    return isGrid ? const GridViewBuild() : const ListViewBuild(viewAll: false);
+    return isGrid
+        ? const GridViewBuild()
+        : const ListViewBuild(
+            viewAll: false,
+            isScrollable: false,
+          );
   }
 
   Widget _buildViewAllButton() {
@@ -133,15 +144,16 @@ class _ExploreFoodState extends State<ExploreFood> {
 
   @override
   Widget build(BuildContext context) {
+    Orientation orientation = MediaQuery.of(context).orientation;
+    double screenWidth = MediaQuery.of(context).size.width;
     return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: MediaQuery.of(context).size.width * 0.04),
+      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildHeader(),
           const SizedBox(height: 16),
-          _buildCategoryList(),
+          _buildCategoryList(orientation, screenWidth),
           const SizedBox(height: 16),
           _buildFoodList(),
           _buildViewAllButton(),
