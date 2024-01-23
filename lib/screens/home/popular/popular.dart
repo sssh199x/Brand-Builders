@@ -152,7 +152,6 @@ Widget _buildPopularRestSlider(double screenWidth, Orientation orientation) {
   double sliderHeight = orientation == Orientation.portrait
       ? calculateSliderHeight(screenWidth, orientation)
       : calculateSliderHeight(screenWidth, orientation);
-  print(calculateSliderHeight(screenWidth, orientation));
 
   return Container(
     width: sliderWidth,
