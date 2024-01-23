@@ -25,7 +25,7 @@ class PopularAll extends StatelessWidget {
                   itemCount: value.restaurants.length,
                   itemBuilder: (context, index) {
                     return Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(15.0),
                       child: RestaurantView(
                         restaurant: value.restaurants[index],
                         sliderHeight: screenWidth * aspectRatio + extraHeight,
