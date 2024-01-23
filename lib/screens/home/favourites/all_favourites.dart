@@ -10,26 +10,48 @@ class AllFavourites extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    Orientation orientation = MediaQuery.of(context).orientation;
+    double aspectRatio = 9 / 16;
+    double extraHeight = 50;
+    double reduceHeight = 200;
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Favourites'),
-          backgroundColor: prmColor,
-          foregroundColor: bgColor,
-        ),
-        body: Consumer<RestaurantModel>(builder: (context, value, child) {
-          return ListView.builder(
-              itemCount: value.restaurants.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: FavouriteView(
-                    favItem: value.restaurants[index],
-                    sliderWidth: double.infinity,
-                    sliderHeight:
-                        MediaQuery.of(context).size.width * (9 / 16) + 50,
-                  ),
+      appBar: AppBar(
+        title: const Text('Favourites'),
+        backgroundColor: prmColor,
+        foregroundColor: bgColor,
+      ),
+      body: Consumer<RestaurantModel>(
+        builder: (context, value, child) {
+          return orientation == Orientation.portrait
+              ? ListView.builder(
+                  itemCount: value.restaurants.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: FavouriteView(
+                        favItem: value.restaurants[index],
+                        sliderWidth: screenWidth,
+                        sliderHeight: screenWidth * aspectRatio + extraHeight,
+                      ),
+                    );
+                  },
+                )
+              : ListView.builder(
+                  itemCount: value.restaurants.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: FavouriteView(
+                        favItem: value.restaurants[index],
+                        sliderWidth: screenWidth,
+                        sliderHeight: screenWidth * aspectRatio - reduceHeight,
+                      ),
+                    );
+                  },
                 );
-              });
-        }));
+        },
+      ),
+    );
   }
 }
