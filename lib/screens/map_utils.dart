@@ -62,6 +62,7 @@ class MapUtils {
             action: SnackBarAction(
               label: 'Retry',
               onPressed: () async {
+                //print(await canLaunchUrl(callLauncherUri));
                 print('Retrying to open the dialpad');
                 if (await canLaunchUrl(callLauncherUri)) {
                   await launchUrl(callLauncherUri);
