@@ -9,7 +9,8 @@ class ExploreAll extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: prmColor,foregroundColor: bgColor,
+        backgroundColor: prmColor,
+        foregroundColor: bgColor,
         title: const Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -18,7 +19,7 @@ class ExploreAll extends StatelessWidget {
           ],
         ),
       ),
-      body: const ListViewBuild(viewAll: false),
+      body: const ListViewBuild(viewAll: true, isScrollable: true),
     );
   }
 }
