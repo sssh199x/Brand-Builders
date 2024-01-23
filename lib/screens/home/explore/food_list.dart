@@ -26,7 +26,8 @@ class DropDownCategory extends StatelessWidget {
           ),
           child: DropdownButtonHideUnderline(
             child: DropdownButton2(
-              value: foodItemsProvider.filter, // The value of the currently selected [DropdownMenuItem].
+              value: foodItemsProvider
+                  .filter, // The value of the currently selected [DropdownMenuItem].
               isDense: true,
               buttonStyleData: const ButtonStyleData(
                 height: 30,
@@ -73,23 +74,27 @@ class DropDownCategory extends StatelessWidget {
 }
 
 class ListViewBuild extends StatelessWidget {
-  const ListViewBuild({super.key, required this.viewAll});
+  const ListViewBuild(
+      {super.key, required this.viewAll, required this.isScrollable});
 
   final bool viewAll;
+  final bool isScrollable;
 
   @override
   Widget build(BuildContext context) {
     return Consumer<FoodModel>(builder: (context, value, child) {
       int count = value.foodItems.length;
       int itemCount = viewAll
-            ? count
-            : count > 6
-                ? 6
-                : count;
+          ? count
+          : count > 6
+              ? 6
+              : count;
       return ListView.builder(
         padding: EdgeInsets.zero,
-         shrinkWrap: true,
-         physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        physics: isScrollable
+            ? const AlwaysScrollableScrollPhysics()
+            : const NeverScrollableScrollPhysics(),
         itemCount: itemCount,
         itemBuilder: (context, index) {
           Food item = value.foodItems[index];
@@ -128,7 +133,9 @@ class ListViewBuild extends StatelessWidget {
                         const SizedBox(height: 4),
                         Text(item.restaurant,
                             style: const TextStyle(
-                                fontFamily: 'Inter', fontSize: 13,fontWeight: FontWeight.w500)),
+                                fontFamily: 'Inter',
+                                fontSize: 13,
+                                fontWeight: FontWeight.w500)),
                         const SizedBox(height: 4),
                         Text(
                           'Rs ${item.price.toString()}',
@@ -185,69 +192,64 @@ class ListViewBuild extends StatelessWidget {
 class GridViewBuild extends StatelessWidget {
   const GridViewBuild({super.key});
 
-    Widget _gridItemWidget(Food item, BuildContext context) {
+  Widget _gridItemWidget(Food item, BuildContext context) {
     return GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => FoodItem(foodItem: item)));
-              },
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: double.infinity,
-                    height: 102,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image.asset(item.image, fit: BoxFit.cover),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    item.name,
-                    style: const TextStyle(
-                        fontFamily: 'Inter',
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        overflow: TextOverflow.ellipsis),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(item.restaurant,
-                      style: const TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 13,
-                          overflow: TextOverflow.ellipsis)),
-                  const SizedBox(height: 4),
-                  Text(
-                    'Rs ${item.price}',
-                    style: const TextStyle(
-                        fontFamily: 'Inter',
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500),
-                  ),
-                  const SizedBox(height: 5),
-                  Row(
-                    children: [
-                      const Icon(Icons.star, color: starColor, size: 15),
-                      const SizedBox(width: 7),
-                      Text(item.rating.toString(), style: txtStyle1),
-                      Text(' (${item.reviews.toString()})', style: txtStyle2),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      const Icon(Icons.location_on, size: 12),
-                      const SizedBox(width: 7),
-                      Text('${item.distance} km', style: txtStyle2),
-                    ],
-                  )
-                ],
-              ),
-            );
+      onTap: () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => FoodItem(foodItem: item)));
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: double.infinity,
+            height: 102,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.asset(item.image, fit: BoxFit.cover),
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            item.name,
+            style: const TextStyle(
+                fontFamily: 'Inter',
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                overflow: TextOverflow.ellipsis),
+          ),
+          const SizedBox(height: 4),
+          Text(item.restaurant,
+              style: const TextStyle(
+                  fontFamily: 'Inter',
+                  fontSize: 13,
+                  overflow: TextOverflow.ellipsis)),
+          const SizedBox(height: 4),
+          Text(
+            'Rs ${item.price}',
+            style: const TextStyle(
+                fontFamily: 'Inter', fontSize: 14, fontWeight: FontWeight.w500),
+          ),
+          const SizedBox(height: 5),
+          Row(
+            children: [
+              const Icon(Icons.star, color: starColor, size: 15),
+              const SizedBox(width: 7),
+              Text(item.rating.toString(), style: txtStyle1),
+              Text(' (${item.reviews.toString()})', style: txtStyle2),
+            ],
+          ),
+          Row(
+            children: [
+              const Icon(Icons.location_on, size: 12),
+              const SizedBox(width: 7),
+              Text('${item.distance} km', style: txtStyle2),
+            ],
+          )
+        ],
+      ),
+    );
   }
-
 
   @override
   Widget build(BuildContext context) {
