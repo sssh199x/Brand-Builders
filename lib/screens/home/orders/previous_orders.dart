@@ -10,13 +10,13 @@ class PreviousOrders extends StatelessWidget {
   const PreviousOrders({super.key});
 
   Widget _buildSectionHeader(BuildContext context) {
-    double scrWidth = MediaQuery.of(context).size.width;
+    double screenWidth = MediaQuery.of(context).size.width;
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: scrWidth * 0.04),
+      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
       child: SectionHeader(
         headerText: 'Your Previous Orders',
         viewText: 'View All  >',
-        viewWidth: scrWidth * 0.2,
+        viewWidth: screenWidth * 0.2,
         onViewClick: () {
           Navigator.push(
             context,
@@ -42,7 +42,7 @@ class PreviousOrders extends StatelessWidget {
                 padding: const EdgeInsets.only(right: 8.0),
                 child: OrderView(
                   orderItem: value.foodItems[index],
-                  sliderHeight: sliderHeight - 10,
+                  sliderHeight: sliderHeight - 35,
                   sliderWidth: sliderWidth,
                 ),
               );
@@ -65,7 +65,8 @@ class PreviousOrders extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    double sliderWidth = screenWidth > 420 ? 420 : screenWidth;
+    double sliderWidth =
+        screenWidth > 420 ? 420 : screenWidth; //420:screenWidth
     double sliderHeight = sliderWidth * (9 / 16) + 60;
 
     return Column(
