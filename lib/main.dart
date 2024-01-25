@@ -16,6 +16,9 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
+    // Set the status bar color using TStatusBarColor class
+    TStatusBarColor.setStatusBarColor(context, prmColor);
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => FoodModel()),
