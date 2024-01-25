@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 const prmColor = Color(0xFF37BD6B);
 const txtColor = Colors.black;
@@ -57,3 +58,24 @@ const txtStyle2 = TextStyle(
     fontFamily: 'Inter',
     fontWeight: FontWeight.w500,
     color: Color(0xFF828282));
+
+class TStatusBarColor {
+  static Future<void> setStatusBarColor(
+      BuildContext context, Color color) async {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(statusBarColor: color),
+    );
+
+    // Check if the platform is iOS
+    if (Theme.of(context).platform == TargetPlatform.iOS) {
+      // Set status bar style for iOS
+      SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(
+          statusBarColor: prmColor,
+          statusBarIconBrightness: Brightness.dark,
+          statusBarBrightness: Brightness.light,
+        ),
+      );
+    }
+  }
+}
