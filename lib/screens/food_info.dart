@@ -60,7 +60,7 @@ class _FoodInfoState extends State<FoodInfo> {
                       ),
                     )
                   : Container(
-                      margin: EdgeInsets.all(landscapepaddingSize),
+                      // margin: EdgeInsets.all(landscapepaddingSize),
                       decoration: BoxDecoration(
                         image: DecorationImage(
                             image: AssetImage(widget.foods.image),
@@ -71,8 +71,8 @@ class _FoodInfoState extends State<FoodInfo> {
           ),
         ),
         Positioned(
-            top: orientation == Orientation.portrait ? 20 : 10,
-            left: orientation == Orientation.portrait ? 10 : 5,
+            top: orientation == Orientation.portrait ? 20 : 20,
+            left: orientation == Orientation.portrait ? 10 : 15,
             child: Align(
               child: SizedBox(
                 width: orientation == Orientation.portrait
@@ -97,8 +97,8 @@ class _FoodInfoState extends State<FoodInfo> {
               ),
             )),
         Positioned(
-            top: orientation == Orientation.portrait ? 20 : 10,
-            right: orientation == Orientation.portrait ? 10 : 5,
+            top: orientation == Orientation.portrait ? 20 : 20,
+            right: orientation == Orientation.portrait ? 10 : 15,
             child: Align(
               child: SizedBox(
                 width: orientation == Orientation.portrait
@@ -240,7 +240,7 @@ class _FoodInfoState extends State<FoodInfo> {
             style: headerStyle.copyWith(fontSize: 18),
           ),
           const SizedBox(
-            height: 10,
+            height: 5,
           ),
           Text(
             widget.foods.ingredients,
@@ -249,6 +249,28 @@ class _FoodInfoState extends State<FoodInfo> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildCartButton(
+      double paddingSize, double screenWidth, Orientation orientation) {
+    return GestureDetector(
+      onTap: () {
+        print('Added To Cart');
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: paddingSize),
+        decoration: BoxDecoration(
+            color: prmColor, borderRadius: BorderRadius.circular(12)),
+        height: orientation == Orientation.portrait
+            ? screenWidth / 8.6
+            : screenWidth / 18.64,
+        child: Center(
+            child: Text(
+          'Add To Cart',
+          style: infoStyle.copyWith(color: bgColor),
+        )),
       ),
     );
   }
@@ -281,10 +303,14 @@ class _FoodInfoState extends State<FoodInfo> {
                   _buildFoodText(paddingSize, landscapepaddingSize, orientation,
                       screenWidth),
                   const SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
                   _buildIngredientsText(
                       orientation, paddingSize, landscapepaddingSize),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  _buildCartButton(paddingSize, screenWidth, orientation)
                 ],
               )
             : SingleChildScrollView(
@@ -312,6 +338,13 @@ class _FoodInfoState extends State<FoodInfo> {
                     ),
                     _buildIngredientsText(
                         orientation, paddingSize, landscapepaddingSize),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    _buildCartButton(paddingSize, screenWidth, orientation),
+                    const SizedBox(
+                      height: 15,
+                    ),
                   ],
                 ),
               ));
