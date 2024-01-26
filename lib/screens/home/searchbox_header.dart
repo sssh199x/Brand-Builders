@@ -118,8 +118,6 @@ class _CurrentLocationState extends State<CurrentLocation> {
             const Text('Choose a location', style: TextStyle(color: bgColor)),
       ),
       body: Consumer<LocationProvider>(builder: (context, value, child) {
-        print("test...");
-
         return OpenStreetMapSearchAndPick(
           onPicked: (pickedData) async {
             try {
