@@ -2,6 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:ordering_app/res/constants.dart';
 
+// Define a data class for the service options
+class ServiceOption {
+  final String optionText;
+  bool isSelected;
+
+  ServiceOption({required this.optionText, required this.isSelected});
+}
+
+class PaymentOption {
+  final String optionText;
+  bool isSelected;
+  PaymentOption({required this.optionText, required this.isSelected});
+}
+
+class AccesibilityFeature {
+  final String optionText;
+  bool isSelected;
+  AccesibilityFeature({required this.optionText, required this.isSelected});
+}
+
+class HostLanguage {
+  final String optionText;
+  bool isSelected;
+  HostLanguage({required this.optionText, required this.isSelected});
+}
+
 class BuisnessSearchBoxHeader extends StatefulWidget {
   const BuisnessSearchBoxHeader({super.key});
 
@@ -11,6 +37,27 @@ class BuisnessSearchBoxHeader extends StatefulWidget {
 }
 
 class _BuisnessSearchBoxHeaderState extends State<BuisnessSearchBoxHeader> {
+  List<PaymentOption> paymentOptions = [
+    PaymentOption(optionText: 'Cash', isSelected: false),
+    PaymentOption(optionText: 'Credit Cards', isSelected: false),
+    PaymentOption(optionText: 'Digital Payment', isSelected: false)
+  ];
+  List<ServiceOption> serviceOptions = [
+    ServiceOption(optionText: 'Delivery', isSelected: false),
+    ServiceOption(optionText: 'Appointment', isSelected: false),
+    ServiceOption(optionText: 'In-store', isSelected: false),
+  ];
+  List<AccesibilityFeature> accesibilityFeatures = [
+    AccesibilityFeature(optionText: 'Wheelchair', isSelected: false),
+    AccesibilityFeature(optionText: 'Parking', isSelected: false),
+    AccesibilityFeature(optionText: 'Allows Pets', isSelected: false)
+  ];
+  List<HostLanguage> hostLanguages = [
+    HostLanguage(optionText: 'Nepali', isSelected: false),
+    HostLanguage(optionText: 'English', isSelected: false),
+    HostLanguage(optionText: 'Others', isSelected: false)
+  ];
+
   List<String> listOfPlaces = ['Anytype', 'In site', 'Deliver'];
   List<String> operatingHours = ['Open Now', 'Specific Hours'];
   int selectedItem = 0;
@@ -91,6 +138,19 @@ class _BuisnessSearchBoxHeaderState extends State<BuisnessSearchBoxHeader> {
         ),
       ),
     );
+  }
+
+  Color getColor(Set<MaterialState> states) {
+    const Set<MaterialState> interactiveStates = <MaterialState>{
+      MaterialState.pressed,
+      MaterialState.hovered,
+      MaterialState.focused,
+    };
+    // for onHovered
+    if (states.any(interactiveStates.contains)) {
+      return Colors.black12;
+    }
+    return Colors.transparent;
   }
 
   Future<dynamic> buildShowModalBottomSheet(
@@ -388,9 +448,9 @@ class _BuisnessSearchBoxHeaderState extends State<BuisnessSearchBoxHeader> {
                     Container(
                       margin: EdgeInsets.symmetric(
                           horizontal: paddingSizeForPortrait),
-                      width: 335,
-                      height: 120,
-                      color: Colors.black12,
+                      width: double.infinity, //335
+                      height: 173, //173
+                      //color: Colors.black12,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         //mainAxisSize: MainAxisSize.min,
@@ -406,24 +466,156 @@ class _BuisnessSearchBoxHeaderState extends State<BuisnessSearchBoxHeader> {
                           const SizedBox(
                             height: 10,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Container(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  'Delivery',
-                                  style: infoStyle.copyWith(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w400),
-                                ),
-                              )
-                            ],
-                          )
+                          Expanded(
+                            child: ListView.builder(
+                              addAutomaticKeepAlives: false,
+                              addRepaintBoundaries: false,
+                              physics: const NeverScrollableScrollPhysics(),
+                              scrollDirection: Axis.vertical,
+                              itemCount: serviceOptions.length,
+                              itemBuilder: (context, index) => Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Container(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      serviceOptions[index].optionText,
+                                      style: infoStyle.copyWith(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                  ),
+                                  Switch(
+                                    // This bool value toggles the switch.
+                                    value: serviceOptions[index].isSelected,
+                                    activeColor: prmColor,
+                                    onChanged: (bool value) {
+                                      // This is called when the user toggles the switch.
+                                      setStateSB(() {
+                                        serviceOptions[index].isSelected =
+                                            value;
+                                      });
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                         ],
                       ),
-                    )
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Divider(
+                      indent: paddingSizeForPortrait,
+                      endIndent: paddingSizeForPortrait,
+                      thickness: 2.0,
+                      color: Colors.black38,
+                    ),
+                    buildTitleAndSubtitle(
+                        paddingSizeForPortrait,
+                        'Payment Options',
+                        'Payment Your Way: Fast,Flexible,Secure'),
+                    buildCheckbox(
+                      paddingSizeForPortrait,
+                      setStateSB,
+                      paymentOptions,
+                      (option) {
+                        // Handle checkbox changes for payment options
+                        option.isSelected = !option.isSelected;
+                      },
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Divider(
+                      indent: paddingSizeForPortrait,
+                      endIndent: paddingSizeForPortrait,
+                      thickness: 2.0,
+                      color: Colors.black38,
+                    ),
+                    buildTitleAndSubtitle(
+                        paddingSizeForPortrait,
+                        'Accesibility Features',
+                        'Enhancing Experience,Embracing Diversity'),
+                    buildCheckbox(paddingSizeForPortrait, setStateSB,
+                        accesibilityFeatures, (option) {
+                      option.isSelected = !option.isSelected;
+                    }),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Divider(
+                      indent: paddingSizeForPortrait,
+                      endIndent: paddingSizeForPortrait,
+                      thickness: 2.0,
+                      color: Colors.black38,
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(
+                          horizontal: paddingSizeForPortrait),
+                      width: double.infinity, //335
+                      height: 173, //173
+                      //color: Colors.black12,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        //mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              'Host Languages',
+                              style: infoStyle.copyWith(
+                                  fontSize: 16, fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Expanded(
+                            child: ListView.builder(
+                              addAutomaticKeepAlives: false,
+                              addRepaintBoundaries: false,
+                              physics: const NeverScrollableScrollPhysics(),
+                              scrollDirection: Axis.vertical,
+                              itemCount: hostLanguages.length,
+                              itemBuilder: (context, index) => Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Container(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      hostLanguages[index].optionText,
+                                      style: infoStyle.copyWith(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                  ),
+                                  Checkbox(
+                                    checkColor: prmColor,
+                                    fillColor:
+                                        MaterialStateProperty.resolveWith(
+                                            getColor),
+                                    value: hostLanguages[index].isSelected,
+                                    onChanged: (bool? value) {
+                                      setStateSB(() {
+                                        hostLanguages[index].isSelected =
+                                            value!; // Pass the entire option to the callback
+                                      });
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -431,6 +623,58 @@ class _BuisnessSearchBoxHeaderState extends State<BuisnessSearchBoxHeader> {
           );
         },
       );
+
+  Container buildCheckbox(double paddingSizeForPortrait, StateSetter setStateSB,
+      List<dynamic> options, Function(dynamic) onChangedCallback) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: paddingSizeForPortrait),
+      width: double.infinity,
+      height: 135,
+      //color: Colors.black12,
+      child: ListView.builder(
+          addAutomaticKeepAlives: false,
+          addRepaintBoundaries: false,
+          physics: const NeverScrollableScrollPhysics(),
+          scrollDirection: Axis.vertical,
+          itemCount: paymentOptions.length,
+          itemBuilder: (context, index) =>
+              buildCheckboxItem(options[index], onChangedCallback, setStateSB)),
+    );
+  }
+
+  Row buildCheckboxItem(
+    dynamic option,
+    Function(dynamic) onChangedCallback,
+    StateSetter setStateSB,
+  ) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Container(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            option.optionText, // Assuming options have an 'optionText' property
+            style: infoStyle.copyWith(
+              fontSize: 12,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+        ),
+        Checkbox(
+          checkColor: prmColor,
+          fillColor: MaterialStateProperty.resolveWith(getColor),
+          value: option.isSelected,
+          onChanged: (bool? value) {
+            setStateSB(() {
+              onChangedCallback(
+                  option); // Pass the entire option to the callback
+            });
+          },
+        ),
+      ],
+    );
+  }
 
   Widget buildFilterButton(
       Orientation orientation,
