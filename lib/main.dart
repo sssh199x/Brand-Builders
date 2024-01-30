@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ordering_app/provider/filter_options.dart';
 import 'provider/location.dart';
 import 'provider/restaurant_model.dart';
 import 'provider/food_model.dart';
@@ -24,6 +25,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => FoodModel()),
         ChangeNotifierProvider(create: (_) => RestaurantModel()),
         ChangeNotifierProvider(create: (_) => LocationProvider()),
+        ChangeNotifierProvider(
+          create: (_) => FilterOptions(),
+        )
       ],
       child: MaterialApp(
         title: 'Ordering App',
