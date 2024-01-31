@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class FilterOptions with ChangeNotifier {
@@ -26,6 +28,53 @@ class FilterOptions with ChangeNotifier {
     HostLanguage(optionText: 'Others', isSelected: false)
   ];
   List<HostLanguage> get hostLanguages => _hostLanguages;
+  // Function to reset all boolean values to false
+  void clearAllValues() {
+    for (var element in _paymentOptions) {
+      element.isSelected = false;
+    }
+
+    for (var element in _accesibilityFeatures) {
+      element.isSelected = false;
+    }
+
+    for (var element in _hostLanguages) {
+      element.isSelected = false;
+    }
+
+    for (var element in _serviceOptions) {
+      element.isSelected = false;
+    }
+
+    // Add similar logic for other lists
+
+    _selectedItem = 0;
+    _selectedItemHours = 0;
+    _currentRangeValues = const RangeValues(500, 1200);
+
+    notifyListeners();
+  }
+
+  // Function to determine the BorderRadius based on the platform
+  BorderRadius getBorderRadius() {
+    if (Platform.isAndroid) {
+      return const BorderRadius.only(
+        topLeft: Radius.circular(12),
+        topRight: Radius.circular(12),
+      );
+    } else {
+      // For iOS or other platforms, return no BorderRadius
+      return BorderRadius.zero;
+    }
+  }
+
+  double getContainerHeight() {
+    if (Platform.isAndroid) {
+      return 57.0;
+    } else {
+      return 70.0;
+    }
+  }
 
   void toggleSwitch(int index, bool newValue) {
     _serviceOptions[index].isSelected = newValue;
