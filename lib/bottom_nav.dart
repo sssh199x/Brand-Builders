@@ -16,7 +16,7 @@ class BottomNavigation extends StatefulWidget {
 class _BottomNavigationState extends State<BottomNavigation> {
   int _currentIndex = 0;
   final screens = [
-    const HomePage1(),
+    const HomePage(),
     const StatusPage(),
     const CartPage(),
     const AccountPage()
