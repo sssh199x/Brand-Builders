@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ordering_app/screens/home_page_1.dart';
 import 'res/constants.dart';
 import 'screens/account/account_page.dart';
 import 'screens/cart/cart_page.dart';
@@ -16,7 +15,7 @@ class BottomNavigation extends StatefulWidget {
 class _BottomNavigationState extends State<BottomNavigation> {
   int _currentIndex = 0;
   final screens = [
-    const HomePage1(),
+    const HomePage(),
     const StatusPage(),
     const CartPage(),
     const AccountPage()
